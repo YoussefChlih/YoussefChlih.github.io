@@ -1,43 +1,19 @@
----
 # Deploy from youssef-s Repository
 #
-# This workflow manually builds the source repository (YoussefChlih/youssef-s)
+# Manually builds the source repository (YoussefChlih/youssef-s)
 # and deploys the built static files to this GitHub Pages repository.
-#
-# How to use:
-# 1. Go to the Actions tab in this repository
-# 2. Select "Deploy from youssef-s" workflow
-# 3. Click "Run workflow"
-# 4. Optionally specify a ref (branch/tag/commit) from youssef-s repo
-#    (defaults to main)
-# 5. Click "Run workflow" button
-#
-# What this workflow does:
-# - Checks out this repository (YoussefChlih.github.io)
-# - Checks out the source repository (YoussefChlih/youssef-s) into ./source
-# - Sets up Node.js 20 environment
-# - Installs dependencies and builds the source project
-#   (npm ci && npm run build)
-# - Replaces the contents of this repo's root with the build output from
-#   ./source/dist
-# - Preserves important files: .git, .github, CNAME, 404.html, .nojekyll
-#   (if present)
-# - Handles CNAME file configuration for custom domain
-# - Commits and pushes changes only if there are actual changes to deploy
 
 name: Deploy from youssef-s
 
-"on":
+on:
   workflow_dispatch:
     inputs:
       ref:
-        description: >-
-          Branch, tag, or commit SHA from youssef-s repository to build
+        description: Branch, tag, or commit SHA from youssef-s repository to build
         required: false
-        default: 'main'
+        default: "main"
         type: string
 
-# Required permissions for the workflow to commit and push changes
 permissions:
   contents: write
 
@@ -60,52 +36,87 @@ jobs:
           path: source
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Set up Node.js 20
+      # Use cache only when the lockfile exists to avoid setup-node errors
+
+      - name: Set up Node.js 20 (npm cache)
+        if: hashFiles('source/package-lock.json') != ''
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
-          cache: 'npm'
+          node-version: "20"
+          cache: "npm"
           cache-dependency-path: source/package-lock.json
 
+      - name: Set up Node.js 20 (pnpm cache)
+        if: hashFiles('source/pnpm-lock.yaml') != ''
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "pnpm"
+          cache-dependency-path: source/pnpm-lock.yaml
+
+      - name: Set up Node.js 20 (yarn cache)
+        if: hashFiles('source/yarn.lock') != ''
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "yarn"
+          cache-dependency-path: source/yarn.lock
+
+      - name: Set up Node.js 20 (no cache)
+        if: |
+          hashFiles('source/package-lock.json') == '' &&
+          hashFiles('source/pnpm-lock.yaml') == '' &&
+          hashFiles('source/yarn.lock') == ''
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
       - name: Install dependencies and build source project
+        working-directory: source
+        shell: bash
         run: |
-          cd source
-          npm ci
-          npm run build
+          set -e
+
+          # Prefer the package manager that matches the lockfile
+          if [ -f pnpm-lock.yaml ]; then
+            corepack enable || true
+            pnpm --version || npm i -g pnpm
+            pnpm install --frozen-lockfile
+            pnpm run build
+
+          elif [ -f yarn.lock ]; then
+            corepack enable || true
+            yarn --version || npm i -g yarn
+            # If yarn.lock is v1, this works; if v3/berry, corepack handles it
+            yarn install --frozen-lockfile || yarn install --immutable
+            yarn run build
+
+          elif [ -f package-lock.json ]; then
+            npm ci
+            npm run build
+
+          else
+            echo "No lockfile found. Proceeding with npm install (non-deterministic)."
+            npm install
+            npm run build
+          fi
 
       - name: Prepare deployment
+        shell: bash
         run: |
           # Create a temporary directory to store files we want to preserve
           mkdir -p temp_preserve
 
-          # Preserve essential files and directories that should not be
-          # overwritten
-          if [ -d ".git" ]; then
-            cp -r .git temp_preserve/
-          fi
-
-          if [ -d ".github" ]; then
-            cp -r .github temp_preserve/
-          fi
-
-          if [ -f "CNAME" ]; then
-            cp CNAME temp_preserve/
-          fi
-
-          if [ -f "404.html" ]; then
-            cp 404.html temp_preserve/
-          fi
-
-          if [ -f ".nojekyll" ]; then
-            cp .nojekyll temp_preserve/
-          fi
+          # Preserve essential files and directories that should not be overwritten
+          if [ -d ".git" ]; then cp -r .git temp_preserve/; fi
+          if [ -d ".github" ]; then cp -r .github temp_preserve/; fi
+          if [ -f "CNAME" ]; then cp CNAME temp_preserve/; fi
+          if [ -f "404.html" ]; then cp 404.html temp_preserve/; fi
+          if [ -f ".nojekyll" ]; then cp .nojekyll temp_preserve/; fi
 
           # Clear the root directory (except temp_preserve and source)
-          find . -maxdepth 1 -type f -not -name "temp_preserve" \
-                 -not -name "source" -delete
-          find . -maxdepth 1 -type d -not -name "." -not -name ".." \
-                 -not -name "temp_preserve" -not -name "source" \
-                 -exec rm -rf {} + 2>/dev/null || true
+          find . -maxdepth 1 -type f -not -name "temp_preserve" -not -name "source" -delete
+          find . -maxdepth 1 -type d -not -name "." -not -name ".." -not -name "temp_preserve" -not -name "source" -exec rm -rf {} + 2>/dev/null || true
 
           # Copy all build output from source/dist to root
           if [ -d "source/dist" ]; then
@@ -116,32 +127,19 @@ jobs:
           fi
 
           # Restore preserved files and directories
-          if [ -d "temp_preserve/.git" ]; then
-            cp -r temp_preserve/.git .
-          fi
-
-          if [ -d "temp_preserve/.github" ]; then
-            cp -r temp_preserve/.github .
-          fi
-
-          if [ -f "temp_preserve/404.html" ]; then
-            cp temp_preserve/404.html .
-          fi
-
-          if [ -f "temp_preserve/.nojekyll" ]; then
-            cp temp_preserve/.nojekyll .
-          fi
+          if [ -d "temp_preserve/.git" ]; then cp -r temp_preserve/.git .; fi
+          if [ -d "temp_preserve/.github" ]; then cp -r temp_preserve/.github .; fi
+          if [ -f "temp_preserve/404.html" ]; then cp temp_preserve/404.html .; fi
+          if [ -f "temp_preserve/.nojekyll" ]; then cp temp_preserve/.nojekyll .; fi
 
           # Handle CNAME file logic
           if [ -f "temp_preserve/CNAME" ]; then
-            # Preserve existing CNAME from this repo
             cp temp_preserve/CNAME .
           elif [ -f "source/public/CNAME" ]; then
-            # Copy CNAME from source repo if it exists and we don't have one
             cp source/public/CNAME .
           fi
 
-          # Clean up temporary directory
+          # Clean up temporary directory and source checkout
           rm -rf temp_preserve
           rm -rf source
 
@@ -151,21 +149,14 @@ jobs:
           git config --local user.name "GitHub Action"
 
       - name: Check for changes and commit
+        shell: bash
         run: |
-          # Add all changes to staging
           git add .
-
-          # Check if there are any changes to commit
           if git diff --staged --quiet; then
             echo "No changes detected. Skipping commit and push."
           else
-            # Commit changes with a descriptive message
-            commit_msg="Deploy from youssef-s@${{ inputs.ref || 'main' }}"
-            commit_msg="$commit_msg - $(date -u +'%Y-%m-%d %H:%M:%S UTC')"
+            commit_msg="Deploy from youssef-s@${{ inputs.ref || 'main' }} - $(date -u +'%Y-%m-%d %H:%M:%S UTC')"
             git commit -m "$commit_msg"
-
-            # Push changes to the repository
             git push
-
             echo "Changes successfully deployed!"
           fi
