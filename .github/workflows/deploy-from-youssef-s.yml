@@ -1,8 +1,3 @@
-# Deploy from youssef-s Repository
-#
-# Manually builds the source repository (YoussefChlih/youssef-s)
-# and deploys the built static files to this GitHub Pages repository.
-
 name: Deploy from youssef-s
 
 on:
@@ -36,8 +31,7 @@ jobs:
           path: source
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      # Use cache only when the lockfile exists to avoid setup-node errors
-
+      # Prefer cache matching the lockfile; fall back to no cache
       - name: Set up Node.js 20 (npm cache)
         if: hashFiles('source/package-lock.json') != ''
         uses: actions/setup-node@v4
@@ -77,7 +71,6 @@ jobs:
         run: |
           set -e
 
-          # Prefer the package manager that matches the lockfile
           if [ -f pnpm-lock.yaml ]; then
             corepack enable || true
             pnpm --version || npm i -g pnpm
@@ -87,7 +80,6 @@ jobs:
           elif [ -f yarn.lock ]; then
             corepack enable || true
             yarn --version || npm i -g yarn
-            # If yarn.lock is v1, this works; if v3/berry, corepack handles it
             yarn install --frozen-lockfile || yarn install --immutable
             yarn run build
 
@@ -104,6 +96,8 @@ jobs:
       - name: Prepare deployment
         shell: bash
         run: |
+          set -e
+
           # Create a temporary directory to store files we want to preserve
           mkdir -p temp_preserve
 
@@ -114,17 +108,37 @@ jobs:
           if [ -f "404.html" ]; then cp 404.html temp_preserve/; fi
           if [ -f ".nojekyll" ]; then cp .nojekyll temp_preserve/; fi
 
+          # Detect build output directory
+          BUILD_OUT=""
+          for d in source/dist source/build source/docs source/out; do
+            if [ -d "$d" ] && [ "$(ls -A "$d" 2>/dev/null)" ]; then
+              BUILD_OUT="$d"
+              break
+            fi
+          done
+
+          # As a final attempt, detect a single non-empty directory created/updated recently under source/
+          if [ -z "$BUILD_OUT" ]; then
+            CANDIDATE="$(find source -maxdepth 1 -mindepth 1 -type d -printf '%T@ %p\n' | sort -nr | awk '{print $2}' | head -n 5 | xargs -I{} bash -lc '[ -n \"$(ls -A {} 2>/dev/null)\" ] && echo {}' | head -n 1)"
+            if [ -n "$CANDIDATE" ]; then
+              BUILD_OUT="$CANDIDATE"
+            fi
+          fi
+
+          if [ -z "$BUILD_OUT" ]; then
+            echo "Error: build output folder not found. Searched: source/dist, source/build, source/docs, source/out."
+            echo "If you customized Vite's build.outDir in vite.config.*, set this workflow to copy from that folder."
+            exit 1
+          fi
+
+          echo "Using build output: $BUILD_OUT"
+
           # Clear the root directory (except temp_preserve and source)
           find . -maxdepth 1 -type f -not -name "temp_preserve" -not -name "source" -delete
           find . -maxdepth 1 -type d -not -name "." -not -name ".." -not -name "temp_preserve" -not -name "source" -exec rm -rf {} + 2>/dev/null || true
 
-          # Copy all build output from source/dist to root
-          if [ -d "source/dist" ]; then
-            cp -r source/dist/* .
-          else
-            echo "Error: source/dist directory not found"
-            exit 1
-          fi
+          # Copy build output to root
+          cp -r "$BUILD_OUT"/* .
 
           # Restore preserved files and directories
           if [ -d "temp_preserve/.git" ]; then cp -r temp_preserve/.git .; fi
