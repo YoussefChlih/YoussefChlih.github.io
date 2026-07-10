@@ -1,18 +1,35 @@
-// ===== All content from 05-content-cv.md — translated to English =====
-// No content is invented. Strict 1:1 mapping from the CV.
+// ===== New Editorial Monochrome Portfolio Content =====
+// Pulls real data from CV: Youssef El Yarchouhi (Software Engineer)
 
 export const identity = {
-  name: "Youssef CHLIH",
-  title: "AI & Data Developer",
-  email: "youssefchlih.ai@gmail.com",
+  name: "Youssef El Yarchouhi",
+  title: "Software Engineer",
+  logoText: "YoussefEL01",
+  email: "youssefchlih.ai@gmail.com", // Keeping real email from CV
+  whatsapp: "+212606544498", // WhatsApp link / contact number
   phone: "+212 6 06 54 44 98",
   linkedin: "https://linkedin.com/in/youssef-chlih",
+  github: "https://github.com/YoussefChlih",
+  instagram: "https://instagram.com",
+  youtube: "https://youtube.com",
   location: "Kénitra, Morocco",
   resumeUrl: "/CV_CHLIH_YOUSSEF.pdf",
 };
 
 export const profile =
-  "Student in Big Data & Artificial Intelligence, currently interning at HB Dev on the Mentora AI educational platform: designing databases and AI pipelines (LangChain, LangGraph, LangSmith) for automated generation of personalized multimodal educational content. Strong experience in ML, Deep Learning, Computer Vision, and NLP. Trilingual (Arabic, French, English), detail-oriented and results-driven.";
+  "Passionate about building digital solutions, web/mobile development, and artificial intelligence. My journey started with Harvard's CS50x, which sparked a deep-seated passion for full-stack engineering, problem-solving, and continuous learning.";
+
+export interface Stat {
+  icon: string;
+  number: string;
+  label: string;
+}
+
+export const stats: Stat[] = [
+  { icon: "award", number: "3 Years", label: "Experience" },
+  { icon: "briefcase", number: "12+", label: "Completed Projects" },
+  { icon: "headset", number: "Online 24/7", label: "Support" },
+];
 
 export interface Experience {
   id: string;
@@ -26,13 +43,13 @@ export interface Experience {
 export const experiences: Experience[] = [
   {
     id: "hbdev",
-    company: "HB Dev",
+    company: "HB Dev (Mentora AI)",
     role: "AI & Data Engineering Intern",
     period: "Apr 2026 – Present",
     location: "Tétouan",
     description: [
-      "Designed and structured the Mentora AI platform database to organize AI pipeline data",
-      "Developed n8n workflows (Gemini VLM, Claude API) and Python pipelines (LangChain, LangGraph, LangSmith) for automated generation of personalized multimodal educational content",
+      "Conceived and structured databases for the Mentora AI educational platform to optimize content pipelines",
+      "Developed Python pipelines (LangChain, LangGraph, LangSmith) and n8n workflows for automated generation of personalized pedagogical content",
     ],
   },
   {
@@ -42,242 +59,207 @@ export const experiences: Experience[] = [
     period: "Feb 2025 – Jun 2025",
     location: "Mohammedia",
     description: [
-      "Developed a 3D object classification system based on a DGCNN model trained on ModelNet10",
-      "Built an interactive Streamlit application for real-time classification and visualization",
+      "Developed a 3D object classification system using a DGCNN deep learning model trained on ModelNet10",
+      "Built an interactive Streamlit application for real-time inference and visualization",
     ],
   },
   {
     id: "hardtech",
-    company: "HardTech Maroc",
+    company: "HardTech Maroc (BabyBain)",
     role: "AI Development Intern",
     period: "Aug 2024 – Sep 2024",
     location: "Casablanca",
     description: [
-      "Designed an automated computer fault detection system using Machine Learning",
-      "Analyzed and preprocessed data to optimize predictive model performance",
+      "Designed an automated hardware fault detection system using Machine Learning algorithms",
+      "Analyzed and preprocessed telemetry data to optimize predictive performance",
     ],
   },
 ];
 
-export interface Project {
-  id: string;
+export interface Qualification {
   title: string;
   subtitle: string;
-  year: string;
-  type: string;
-  description: string[];
-  tags: string[];
+  date: string;
+  type: "education" | "experience";
 }
 
-export const projects: Project[] = [
+export const qualifications: Qualification[] = [
+  // Education
   {
-    id: "hiregenius",
-    title: "HireGenius",
-    subtitle: "Intelligent AI-Powered Recruitment System",
-    year: "2025",
-    type: "End-of-studies Project",
-    description: [
-      "NLP-based CV analysis for ranking candidates by relevance",
-      "Facial expression analysis with YOLOv8 and voice emotion analysis with CNN-BiLSTM during interviews",
-    ],
-    tags: ["NLP", "YOLOv8", "CNN-BiLSTM", "Deep Learning", "Computer Vision"],
+    title: "ENAID",
+    subtitle: "Software Engineering Degree",
+    date: "Oct 2024 – Jun 2027",
+    type: "education",
   },
   {
-    id: "kwizy",
-    title: "Kwizy",
-    subtitle: "Intelligent Quiz Platform with RAG",
-    year: "Dec 2025",
-    type: "Personal Project",
-    description: [
-      "AI-powered web application based on Retrieval-Augmented Generation (RAG), built with Python and Flask",
-      "CI/CD pipeline with Jenkins and Docker, Agile/Scrum methodology and automated testing",
-    ],
-    tags: ["RAG", "Python", "Flask", "Docker", "Jenkins", "CI/CD"],
+    title: "Higher School of Technology - EST",
+    subtitle: "DUT Web & Mobile App Dev",
+    date: "Sep 2022 – Apr 2024",
+    type: "education",
   },
   {
-    id: "datawarehouse",
-    title: "Data Warehouse",
-    subtitle: "LinkedIn Academic Program Analysis",
-    year: "Jan 2026",
-    type: "Academic Project — EST Salé",
-    description: [
-      "Star schema Data Warehouse modeling to analyze the link between academic programs and job market needs",
-      "Complete ETL pipeline with Talend Open Studio on 7,700+ records with data quality controls",
-      "Power BI and SQL dashboards with business KPIs and OLAP analysis (slicing, dicing, drill-down)",
-    ],
-    tags: ["Talend", "Power BI", "SQL", "ETL", "Data Modeling", "OLAP"],
-  },
-];
-
-export interface Education {
-  degree: string;
-  period: string;
-  school: string;
-}
-
-export const education: Education[] = [
-  {
-    degree: "Bachelor's in Big Data & Artificial Intelligence",
-    period: "2025 – 2026",
-    school: "EST Salé",
+    title: "Multidisciplinary Faculty",
+    subtitle: "Biology Studies",
+    date: "Sep 2021 – Feb 2022",
+    type: "education",
   },
   {
-    degree: "DUT in Artificial Intelligence & Data Engineering",
-    period: "2023 – 2025",
-    school: "EST Nador",
+    title: "Ibn Nafis High School",
+    subtitle: "Baccalauréat, Science Physique",
+    date: "Sep 2020 – Jun 2021",
+    type: "education",
+  },
+  // Experience
+  {
+    title: "HB Dev",
+    subtitle: "AI & Data Engineering Intern",
+    date: "Apr 2026 – Present",
+    type: "experience",
   },
   {
-    degree: "Baccalaureate in Mathematical Sciences A",
-    period: "2022 – 2023",
-    school: "Lycée Moulay Rachid",
-  },
-];
-
-export interface Certification {
-  id: string;
-  name: string;
-  issuer: string;
-}
-
-export const certifications: Certification[] = [
-  {
-    id: "oci-foundations",
-    name: "Oracle Cloud Infrastructure 2024 — Foundations Associate",
-    issuer: "Oracle",
+    title: "3D Smart Factory",
+    subtitle: "AI Developer Intern",
+    date: "Feb 2025 – Jun 2025",
+    type: "experience",
   },
   {
-    id: "oci-genai",
-    name: "Generative AI Professional",
-    issuer: "Oracle Cloud Infrastructure (2025)",
-  },
-  {
-    id: "ml-process",
-    name: "The Machine Learning Process A–Z",
-    issuer: "365 Data Science",
-  },
-  {
-    id: "python-bootcamp",
-    name: "Python Programmer Bootcamp",
-    issuer: "365 Data Science",
-  },
-  {
-    id: "data-science-intro",
-    name: "Intro to Data Science",
-    issuer: "Cisco Academy",
-  },
-  {
-    id: "mlops",
-    name: "MLOps Level 2",
-    issuer: "Coursera",
+    title: "HardTech Maroc",
+    subtitle: "AI Development Intern",
+    date: "Aug 2024 – Sep 2024",
+    type: "experience",
   },
 ];
 
 export interface SkillCategory {
-  id: string;
-  name: string;
+  title: string;
   skills: string[];
 }
 
 export const skillCategories: SkillCategory[] = [
   {
-    id: "ai-ml",
-    name: "AI & Machine Learning",
+    title: "Frameworks & Libraries",
     skills: [
-      "Machine Learning",
-      "Deep Learning",
-      "NLP",
-      "GANs",
-      "LLMs",
-      "RAG",
-      "Predictive Models",
+      "Node.js",
+      "Express.js",
+      "React.js",
+      "Next.js",
+      "Tailwind",
+      "Django",
+      "Flask",
+      "Laravel",
+      "Bootstrap",
+      "jQuery",
     ],
   },
   {
-    id: "ai-pipelines",
-    name: "AI Pipelines & Orchestration",
+    title: "Tools & Technologies",
     skills: [
-      "LangChain",
-      "LangGraph",
-      "LangSmith",
-      "n8n",
-      "Gemini VLM",
-      "Claude API",
+      "Git",
+      "Postman",
+      "PostgreSQL",
+      "Wordpress",
+      "MySQL",
+      "Firebase",
+      "Figma",
+      "Jira",
     ],
   },
   {
-    id: "computer-vision",
-    name: "Computer Vision",
-    skills: ["OpenCV", "YOLOv8", "3D CNN", "Pillow"],
-  },
-  {
-    id: "data-bi",
-    name: "Data & BI",
+    title: "Programming Languages",
     skills: [
-      "Talend",
-      "ETL",
-      "Data Modeling",
-      "Power BI",
-      "Advanced SQL",
-      "OLAP",
-    ],
-  },
-  {
-    id: "languages",
-    name: "Programming Languages",
-    skills: ["Python", "Java", "JavaScript", "Scala"],
-  },
-  {
-    id: "databases",
-    name: "Databases",
-    skills: ["SQL", "PostgreSQL", "MongoDB", "Redis", "Cassandra", "Neo4j"],
-  },
-  {
-    id: "web-apis",
-    name: "Web & APIs",
-    skills: ["HTML", "CSS", "React", "FastAPI", "REST APIs"],
-  },
-  {
-    id: "devops",
-    name: "DevOps & Infrastructure",
-    skills: [
-      "Git/GitHub",
-      "Docker",
-      "Kubernetes",
-      "Jenkins",
-      "GitLab CI",
-      "Terraform",
-      "CloudFormation",
+      "JavaScript",
+      "TypeScript",
+      "Python",
+      "PHP",
+      "Java",
+      "C#",
+      "C++",
+      "Go",
     ],
   },
 ];
 
-export const softSkills = [
-  "Teamwork",
-  "Communication",
-  "Analytical Thinking",
-  "Adaptability",
-  "Time Management",
-  "Problem Solving",
-  "Autonomy",
-  "Rigor",
-];
-
-export interface Language {
-  name: string;
-  level: string;
+export interface Project {
+  title: string;
+  category: "web" | "mobile" | "cv"; // cv = computer vision
+  description: string;
+  date: string;
+  url?: string;
+  isLive?: boolean;
 }
 
-export const languages: Language[] = [
-  { name: "Arabic", level: "Native" },
-  { name: "French", level: "Fluent" },
-  { name: "English", level: "Fluent" },
+export const projects: Project[] = [
+  {
+    title: "RezAdapt.com",
+    category: "web",
+    description: "Adaptive web platform optimizing layout structures for responsive business displays.",
+    date: "March 2026",
+    isLive: true,
+  },
+  {
+    title: "Tadartino Real Estate Platform",
+    category: "web",
+    description: "Comprehensive property listings search platform featuring interactive geolocation features.",
+    date: "January 2026",
+    isLive: true,
+  },
+  {
+    title: "CoStudy Learning Sessions Platform",
+    category: "web",
+    description: "Peer-to-peer virtual sessions booking platform for university study clubs.",
+    date: "December 2025",
+  },
+  {
+    title: "Quiz Master",
+    category: "web",
+    description: "Intelligent web-based quiz orchestrator utilizing RAG (Retrieval-Augmented Generation).",
+    date: "November 2025",
+  },
+  {
+    title: "Flutter Club Community App",
+    category: "mobile",
+    description: "Cross-platform mobile application providing real-time event booking and updates for communities.",
+    date: "October 2025",
+  },
+  {
+    title: "Hand Tracking Project",
+    category: "cv",
+    description: "Real-time gestures-based controls implementation using OpenCV and MediaPipe.",
+    date: "September 2025",
+  },
+  {
+    title: "Django Auctions Website",
+    category: "web",
+    description: "Interactive real-time bid orchestrator complete with notifications and checkout forms.",
+    date: "June 2025",
+  },
+  {
+    title: "Flask Ecommerce Website",
+    category: "web",
+    description: "Microservices-ready shopping cart platform featuring secure payment processors.",
+    date: "May 2025",
+  },
 ];
 
-export const navSections = [
-  { id: "about", label: "About" },
-  { id: "experience", label: "Experience" },
-  { id: "projects", label: "Projects" },
-  { id: "skills", label: "Skills" },
-  { id: "certifications", label: "Certifications" },
-  { id: "contact", label: "Contact" },
+export interface Certificate {
+  title: string;
+  issuer: string;
+  description: string;
+  date: string;
+  url?: string;
+}
+
+export const certificates: Certificate[] = [
+  {
+    title: "CS50's Introduction to Computer Science",
+    issuer: "HarvardX",
+    description: "Rigorous entry-level computer science foundations course covering C, Python, SQL, and Web structures.",
+    date: "2024",
+  },
+  {
+    title: "CS50's Web Programming with Python and JavaScript",
+    issuer: "HarvardX",
+    description: "Full-stack programming course deep diving into Django, React, CI/CD, SQL, and CSS layout controls.",
+    date: "2024",
+  },
 ];

@@ -4,42 +4,44 @@
 :root {
   --text-hero: clamp(2.5rem, 8vw, 6rem);
   --text-h2: clamp(1.75rem, 4vw, 3rem);
-  --text-h3: clamp(1.25rem, 2.5vw, 1.75rem);
-  --text-body: clamp(1rem, 1.2vw, 1.125rem);
-  --text-small: 0.875rem;
+  --text-h3: clamp(1.15rem, 2vw, 1.5rem);
+  --text-body: clamp(0.95rem, 1.2vw, 1.05rem);
+  --text-small: 0.85rem;
 
   /* Layout */
   --container-max: 1200px;
   --container-padding: clamp(1.5rem, 5vw, 4rem);
-  --radius: 1rem;
-  --radius-sm: 0.5rem;
+  --radius: 12px;
+  --radius-sm: 6px;
 
   /* Font families (defined directly for offline compatibility) */
-  --font-display: "Bricolage Grotesque", system-ui, -apple-system, sans-serif;
-  --font-body: "Inter", system-ui, -apple-system, sans-serif;
+  --font-display: "Playfair Display", Georgia, "Times New Roman", serif;
+  --font-body: "Inter", "Satoshi", system-ui, -apple-system, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 }
 
-/* ===== Dark Mode (default) ===== */
+/* ===== Dark Mode (Monochrome Editorial Dark) ===== */
 [data-theme="dark"] {
-  --bg: #0a0a0f;
-  --bg-elevated: #121218;
-  --text-primary: #f5f5f7;
-  --text-secondary: #a1a1aa;
-  --border: rgba(255, 255, 255, 0.08);
-  --accent: #7c5cff;
-  --accent-soft: rgba(124, 92, 255, 0.15);
+  --bg: #111111;
+  --bg-elevated: #1a1a1a;
+  --text-primary: #F7F5F1;
+  --text-secondary: #A3A3A3;
+  --border: rgba(255, 255, 255, 0.1);
+  --border-dotted: rgba(255, 255, 255, 0.15);
+  --accent: #FFFFFF;
+  --accent-soft: rgba(255, 255, 255, 0.08);
 }
 
-/* ===== Light Mode ===== */
+/* ===== Light Mode (Monochrome Editorial Light - Default/Cream) ===== */
 [data-theme="light"] {
-  --bg: #fafafa;
-  --bg-elevated: #ffffff;
-  --text-primary: #14141a;
-  --text-secondary: #52525b;
-  --border: rgba(0, 0, 0, 0.08);
-  --accent: #6d3fff;
-  --accent-soft: rgba(109, 63, 255, 0.1);
+  --bg: #F7F5F1;
+  --bg-elevated: #FFFFFF;
+  --text-primary: #1A1A1A;
+  --text-secondary: #6B6B6B;
+  --border: #E5E5E0;
+  --border-dotted: #C2C2B8;
+  --accent: #111111;
+  --accent-soft: rgba(17, 17, 17, 0.06);
 }
 
 /* ===== Base Styles ===== */
@@ -199,6 +201,25 @@ body::before {
 
 .link-underline:hover::after {
   transform: scaleX(1);
+}
+
+/* ===== Editorial Dotted Rule & Eyebrows ===== */
+.dotted-rule {
+  border: none;
+  border-top: 1px dotted var(--border-dotted);
+  margin-block: 4rem;
+  width: 100%;
+}
+
+.eyebrow {
+  display: block;
+  font-family: var(--font-mono), monospace;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--text-secondary);
+  text-align: center;
+  margin-bottom: 0.5rem;
 }
 
 /* ===== Reduced Motion ===== */

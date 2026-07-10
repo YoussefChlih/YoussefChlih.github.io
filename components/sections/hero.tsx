@@ -1,139 +1,153 @@
 "use client";
 
-import { useRef, useEffect } from "react";
 import { motion } from "motion/react";
-import { Download, ArrowDown } from "lucide-react";
-import { MagneticButton, MagneticButtonOutline } from "@/components/ui/magnetic-button";
-import { identity } from "@/lib/data";
-import { staggerContainer, wordReveal } from "@/lib/animations";
-import dynamic from "next/dynamic";
-import gsap from "gsap";
-
-const HeroScene = dynamic(
-  () => import("@/components/three/hero-scene"),
-  { ssr: false, loading: () => null }
-);
+import { MessageSquare, ArrowRight } from "lucide-react";
+import { FaLinkedin, FaInstagram, FaYoutube } from "react-icons/fa";
+import { identity, profile } from "@/lib/data";
+import { fadeInUp, staggerContainer, viewportConfig } from "@/lib/animations";
 
 export function Hero() {
-  const sectionRef = useRef<HTMLElement>(null);
-  const titleWords = identity.name.split(" ");
-  const subtitleRef = useRef<HTMLParagraphElement>(null);
-  const ctaRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const prefersReducedMotion = window.matchMedia(
-      "(prefers-reduced-motion: reduce)"
-    ).matches;
-    if (prefersReducedMotion) return;
-
-    const tl = gsap.timeline({ delay: 0.3 });
-
-    // Fade in subtitle after title reveal
-    if (subtitleRef.current) {
-      tl.fromTo(
-        subtitleRef.current,
-        { opacity: 0, y: 20 },
-        { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" },
-        "+=0.2"
-      );
-    }
-
-    // Fade in CTAs
-    if (ctaRef.current) {
-      tl.fromTo(
-        ctaRef.current,
-        { opacity: 0, y: 20 },
-        { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" },
-        "-=0.3"
-      );
-    }
-
-    return () => {
-      tl.kill();
-    };
-  }, []);
-
   return (
     <section
-      ref={sectionRef}
       id="hero"
-      className="relative min-h-screen flex items-center justify-center overflow-hidden"
+      className="relative min-h-screen flex items-center justify-center pt-24 pb-16 overflow-hidden"
+      style={{ background: "var(--bg)" }}
     >
-      {/* 3D Background */}
-      <HeroScene />
-
-      {/* Content */}
-      <div className="container relative z-10 text-center">
-        {/* Role badge */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.5, delay: 0.1 }}
-          className="mb-6"
-        >
-          <span className="badge">{identity.title}</span>
-        </motion.div>
-
-        {/* Name — word by word reveal */}
-        <motion.h1
-          className="text-hero mb-6"
-          variants={staggerContainer}
-          initial="hidden"
-          animate="visible"
-        >
-          {titleWords.map((word, i) => (
-            <motion.span
-              key={i}
-              variants={wordReveal}
-              className="inline-block mr-[0.3em]"
-            >
-              {word}
-            </motion.span>
-          ))}
-        </motion.h1>
-
-        {/* Subtitle */}
-        <p
-          ref={subtitleRef}
-          className="text-body max-w-2xl mx-auto mb-10"
-          style={{ opacity: 0 }}
-        >
-          Building intelligent systems at the intersection of AI, Data
-          Engineering, and Computer Vision. Currently crafting{" "}
-          <span className="text-accent font-medium">Mentora AI</span> at HB Dev.
-        </p>
-
-        {/* CTA buttons */}
-        <div
-          ref={ctaRef}
-          className="flex flex-wrap items-center justify-center gap-4"
-          style={{ opacity: 0 }}
-        >
-          <MagneticButton
-            href={identity.resumeUrl}
-            download="CV_CHLIH_YOUSSEF.pdf"
+      <div className="container relative z-10">
+        <div className="grid md:grid-cols-[auto_1fr_1.2fr] gap-8 md:gap-12 items-center">
+          
+          {/* Vertical Social Rail */}
+          <motion.div
+            className="flex md:flex-col items-center justify-center gap-6 py-4 md:py-0"
+            variants={staggerContainer}
+            initial="hidden"
+            animate="visible"
           >
-            <Download size={18} />
-            Download CV
-          </MagneticButton>
+            <motion.a
+              variants={fadeInUp}
+              href={`mailto:${identity.email}`}
+              className="text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors duration-200"
+              aria-label="Email"
+              data-cursor="hover"
+            >
+              <MessageSquare size={18} />
+            </motion.a>
+            <motion.a
+              variants={fadeInUp}
+              href={identity.linkedin}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors duration-200"
+              aria-label="LinkedIn"
+              data-cursor="hover"
+            >
+              <FaLinkedin size={18} />
+            </motion.a>
+            <motion.a
+              variants={fadeInUp}
+              href={identity.instagram}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors duration-200"
+              aria-label="Instagram"
+              data-cursor="hover"
+            >
+              <FaInstagram size={18} />
+            </motion.a>
+            <motion.a
+              variants={fadeInUp}
+              href={identity.youtube}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors duration-200"
+              aria-label="YouTube"
+              data-cursor="hover"
+            >
+              <FaYoutube size={18} />
+            </motion.a>
+          </motion.div>
 
-          <MagneticButtonOutline href="#contact">
-            Get in Touch
-          </MagneticButtonOutline>
+          {/* Left Column Text */}
+          <motion.div
+            variants={staggerContainer}
+            initial="hidden"
+            animate="visible"
+            className="text-left flex flex-col items-start"
+          >
+            <motion.h1
+              variants={fadeInUp}
+              className="text-hero leading-[1.1] mb-4 text-[var(--text-primary)]"
+              style={{ fontFamily: "var(--font-display)" }}
+            >
+              {identity.name} <span className="inline-block animate-wave">👋</span>
+            </motion.h1>
+
+            <motion.div
+              variants={fadeInUp}
+              className="flex items-center gap-4 w-full my-4"
+            >
+              <div className="h-[1px] bg-[var(--border)] flex-grow max-w-[80px]" />
+              <span className="font-mono text-small uppercase tracking-wider text-[var(--text-secondary)]">
+                {identity.title}
+              </span>
+            </motion.div>
+
+            <motion.p
+              variants={fadeInUp}
+              className="text-body mb-8 text-[var(--text-secondary)] max-w-md"
+              style={{ fontSize: "15px" }}
+            >
+              {profile}
+            </motion.p>
+
+            <motion.div variants={fadeInUp}>
+              <a
+                href="#contact"
+                className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full font-medium transition-transform duration-300 hover:scale-105"
+                style={{
+                  background: "var(--accent)",
+                  color: "var(--bg)",
+                }}
+                data-cursor="hover"
+              >
+                Say hello <ArrowRight size={16} />
+              </a>
+            </motion.div>
+          </motion.div>
+
+          {/* Right Column Photo */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
+            className="flex justify-center md:justify-end"
+          >
+            <div
+              className="relative aspect-square w-full max-w-[380px] md:max-w-[420px] overflow-hidden shadow-lg border border-[var(--border)]"
+              style={{ borderRadius: "24px" }}
+            >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/portrait.png"
+                alt={identity.name}
+                className="object-cover w-full h-full hover:scale-105 transition-transform duration-700"
+              />
+            </div>
+          </motion.div>
+
         </div>
-
-        {/* Scroll indicator */}
-        <motion.div
-          className="absolute bottom-8 left-1/2 -translate-x-1/2"
-          animate={{ y: [0, 8, 0] }}
-          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-        >
-          <ArrowDown
-            size={20}
-            style={{ color: "var(--text-secondary)", opacity: 0.5 }}
-          />
-        </motion.div>
       </div>
+
+      <style jsx global>{`
+        @keyframes wave {
+          0%, 100% { transform: rotate(0deg); }
+          50% { transform: rotate(15deg); }
+        }
+        .animate-wave {
+          animation: wave 2.5s infinite;
+          transform-origin: 70% 70%;
+        }
+      `}</style>
     </section>
   );
 }

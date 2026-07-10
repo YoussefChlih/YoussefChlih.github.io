@@ -6,10 +6,11 @@ import { Menu, X } from "lucide-react";
 import { ThemeToggle } from "./theme-toggle";
 
 const navLinks = [
+  { label: "Home", href: "#hero" },
   { label: "About", href: "#about" },
-  { label: "Experience", href: "#experience" },
-  { label: "Projects", href: "#projects" },
   { label: "Skills", href: "#skills" },
+  { label: "Certifications", href: "#certifications" },
+  { label: "Portfolio", href: "#projects" },
   { label: "Contact", href: "#contact" },
 ];
 
@@ -37,7 +38,7 @@ export function AnimatedNav() {
           className="container flex items-center justify-between py-4 transition-all duration-300"
           style={{
             backdropFilter: scrolled ? "blur(20px)" : "none",
-            background: scrolled ? "color-mix(in srgb, var(--bg) 80%, transparent)" : "transparent",
+            background: scrolled ? "color-mix(in srgb, var(--bg) 95%, transparent)" : "transparent",
             borderBottom: scrolled ? "1px solid var(--border)" : "1px solid transparent",
           }}
         >
@@ -46,13 +47,12 @@ export function AnimatedNav() {
             href="#"
             className="text-h3 font-bold"
             style={{
-              fontFamily: "var(--font-display), system-ui, sans-serif",
               color: "var(--text-primary)",
               textDecoration: "none",
             }}
             data-cursor="hover"
           >
-            Y<span style={{ color: "var(--accent)" }}>.</span>C
+            YoussefEL01
           </a>
 
           {/* Desktop Nav Links */}

@@ -1,169 +1,69 @@
 "use client";
 
 import { motion } from "motion/react";
-import {
-  fadeInUp,
-  staggerContainer,
-  viewportConfig,
-} from "@/lib/animations";
-import { skillCategories, softSkills } from "@/lib/data";
-import {
-  Brain,
-  Workflow,
-  Eye,
-  BarChart3,
-  Code2,
-  Database,
-  Globe,
-  Container,
-  Users,
-} from "lucide-react";
-
-const categoryIcons: Record<string, React.ReactNode> = {
-  "ai-ml": <Brain size={20} />,
-  "ai-pipelines": <Workflow size={20} />,
-  "computer-vision": <Eye size={20} />,
-  "data-bi": <BarChart3 size={20} />,
-  languages: <Code2 size={20} />,
-  databases: <Database size={20} />,
-  "web-apis": <Globe size={20} />,
-  devops: <Container size={20} />,
-};
+import { Check } from "lucide-react";
+import { skillCategories } from "@/lib/data";
+import { fadeInUp, staggerContainer, viewportConfig } from "@/lib/animations";
 
 export function Skills() {
   return (
-    <section id="skills" className="section">
+    <section id="skills" className="section bg-[var(--bg)]">
       <div className="container">
-        {/* Section Title */}
-        <motion.div
-          variants={staggerContainer}
-          initial="hidden"
-          whileInView="visible"
-          viewport={viewportConfig}
-          className="mb-16"
-        >
-          <motion.h2 variants={fadeInUp} className="text-h2 mb-4">
-            Technical <span className="text-accent">Skills</span>
-          </motion.h2>
-          <motion.div
-            variants={fadeInUp}
-            className="w-16 h-1 rounded-full"
-            style={{ background: "var(--accent)" }}
-          />
-        </motion.div>
-
-        {/* Bento Grid — asymmetric layout */}
-        <motion.div
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"
-          variants={staggerContainer}
-          initial="hidden"
-          whileInView="visible"
-          viewport={viewportConfig}
-        >
-          {skillCategories.map((category, i) => {
-            // Make first two and last categories span 2 cols on large screens
-            const isWide = i === 0 || i === 1;
-
-            return (
-              <motion.div
-                key={category.id}
-                variants={fadeInUp}
-                className={`card p-6 ${isWide ? "lg:col-span-1" : ""}`}
-                whileHover={{
-                  y: -4,
-                  boxShadow: "0 20px 40px -15px var(--accent-soft)",
-                }}
-                transition={{ duration: 0.3 }}
-                data-cursor="hover"
-              >
-                {/* Category header */}
-                <div className="flex items-center gap-3 mb-4">
-                  <div
-                    className="w-10 h-10 rounded-lg flex items-center justify-center"
-                    style={{
-                      background: "var(--accent-soft)",
-                      color: "var(--accent)",
-                    }}
-                  >
-                    {categoryIcons[category.id] || <Code2 size={20} />}
-                  </div>
-                  <h3
-                    className="font-semibold"
-                    style={{
-                      color: "var(--text-primary)",
-                      fontSize: "0.95rem",
-                    }}
-                  >
-                    {category.name}
-                  </h3>
-                </div>
-
-                {/* Skill badges */}
-                <div className="flex flex-wrap gap-2">
-                  {category.skills.map((skill) => (
-                    <motion.span
-                      key={skill}
-                      className="badge"
-                      style={{ fontSize: "0.75rem" }}
-                      whileHover={{ scale: 1.08, rotate: Math.random() > 0.5 ? 2 : -2 }}
-                      transition={{ duration: 0.2 }}
-                    >
-                      {skill}
-                    </motion.span>
-                  ))}
-                </div>
-              </motion.div>
-            );
-          })}
-        </motion.div>
-
-        {/* Soft Skills */}
-        <motion.div
-          className="mt-8"
-          variants={staggerContainer}
-          initial="hidden"
-          whileInView="visible"
-          viewport={viewportConfig}
-        >
-          <motion.div
-            variants={fadeInUp}
-            className="card p-6"
+        
+        {/* Eyebrow + Title */}
+        <div className="text-center mb-16">
+          <span className="eyebrow">My technical level</span>
+          <h2
+            className="text-h2 text-[var(--text-primary)]"
+            style={{ fontFamily: "var(--font-display)" }}
           >
-            <div className="flex items-center gap-3 mb-4">
-              <div
-                className="w-10 h-10 rounded-lg flex items-center justify-center"
-                style={{
-                  background: "var(--accent-soft)",
-                  color: "var(--accent)",
-                }}
-              >
-                <Users size={20} />
-              </div>
-              <h3
-                className="font-semibold"
-                style={{
-                  color: "var(--text-primary)",
-                  fontSize: "0.95rem",
-                }}
-              >
-                Soft Skills
+            Skills
+          </h2>
+          <div className="w-12 h-[1px] bg-[var(--border)] mx-auto mt-4" />
+        </div>
+
+        {/* 3 Equal-Width Bordered Cards */}
+        <motion.div
+          className="grid md:grid-cols-3 gap-6"
+          variants={staggerContainer}
+          initial="hidden"
+          whileInView="visible"
+          viewport={viewportConfig}
+        >
+          {skillCategories.map((category, index) => (
+            <motion.div
+              key={index}
+              variants={fadeInUp}
+              className="card p-6 border border-[var(--border)] bg-[var(--bg-elevated)]"
+              whileHover={{ y: -4 }}
+              transition={{ duration: 0.2 }}
+              data-cursor="hover"
+            >
+              {/* Category Title */}
+              <h3 className="font-bold text-center text-body text-[var(--text-primary)] mb-6 border-b border-[var(--border)] pb-4">
+                {category.title}
               </h3>
-            </div>
-            <div className="flex flex-wrap gap-2">
-              {softSkills.map((skill) => (
-                <motion.span
-                  key={skill}
-                  className="badge"
-                  style={{ fontSize: "0.75rem" }}
-                  whileHover={{ scale: 1.08, rotate: 2 }}
-                  transition={{ duration: 0.2 }}
-                >
-                  {skill}
-                </motion.span>
-              ))}
-            </div>
-          </motion.div>
+
+              {/* Two-Column Checklist */}
+              <div className="grid grid-cols-2 gap-x-4 gap-y-3">
+                {category.skills.map((skill, sIdx) => (
+                  <div key={sIdx} className="flex items-center gap-2">
+                    <div
+                      className="w-4 h-4 rounded-full flex items-center justify-center flex-shrink-0"
+                      style={{ background: "var(--accent-soft)" }}
+                    >
+                      <Check size={10} className="text-[var(--text-primary)]" />
+                    </div>
+                    <span className="text-[13px] text-[var(--text-secondary)] font-medium leading-none">
+                      {skill}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </motion.div>
+          ))}
         </motion.div>
+
       </div>
     </section>
   );
