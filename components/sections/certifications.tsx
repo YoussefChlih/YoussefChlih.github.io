@@ -77,18 +77,24 @@ export function Certifications() {
 
                       {/* Footer Actions */}
                       <div className="flex items-center justify-between mt-auto pt-4 border-t border-[var(--border)]">
-                        <a
-                          href={cert.url || "#"}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-[12px] font-mono uppercase tracking-wider transition-all duration-300 hover:scale-105"
-                          style={{
-                            background: "var(--accent)",
-                            color: "var(--bg)",
-                          }}
-                        >
-                          View Certificate →
-                        </a>
+                        {cert.url ? (
+                          <a
+                            href={cert.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-[12px] font-mono uppercase tracking-wider transition-all duration-300 hover:scale-105"
+                            style={{
+                              background: "var(--accent)",
+                              color: "var(--bg)",
+                            }}
+                          >
+                            View Certificate →
+                          </a>
+                        ) : (
+                          <span className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-[12px] font-mono uppercase tracking-wider text-[var(--text-secondary)]">
+                            Certificate on request
+                          </span>
+                        )}
 
                         <div className="flex items-center gap-1.5 text-small text-[var(--text-secondary)] font-mono">
                           <Calendar size={13} />

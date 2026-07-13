@@ -1,5 +1,14 @@
 @import "tailwindcss";
 
+/* Explicitly tell Tailwind v4 where to scan for class names.
+   Without these @source directives, the auto-detection missed the
+   app/components trees in some build runs, which resulted in ZERO
+   `md:*` (and other) responsive variants being generated — breaking
+   the entire desktop layout. See lib/README for context. */
+@source "../app";
+@source "../components";
+@source "../lib";
+
 /* ===== Typography Scale ===== */
 :root {
   --text-hero: clamp(2.5rem, 8vw, 6rem);
@@ -14,10 +23,13 @@
   --radius: 12px;
   --radius-sm: 6px;
 
-  /* Font families (defined directly for offline compatibility) */
-  --font-display: "Playfair Display", Georgia, "Times New Roman", serif;
-  --font-body: "Inter", "Satoshi", system-ui, -apple-system, sans-serif;
-  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  /* Font families — `next/font` self-hosts the actual @font-face and exposes
+     a CSS variable per family (*-loaded) carrying the real font name. The
+     fallback stack only applies if a glyph is missing. This replaces the old
+     invisible <link>/font-family-only setup that shipped NO font files. */
+  --font-display: var(--font-display-loaded), Georgia, "Times New Roman", serif;
+  --font-body: var(--font-body-loaded), system-ui, -apple-system, sans-serif;
+  --font-mono: var(--font-mono-loaded), ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 }
 
 /* ===== Dark Mode (Monochrome Editorial Dark) ===== */
@@ -46,7 +58,9 @@
 
 /* ===== Base Styles ===== */
 html {
-  scroll-behavior: smooth;
+  scroll-behavior: auto;
+  scroll-padding-top: 5.5rem;
+  scrollbar-gutter: stable;
   transition: background-color 0.4s ease, color 0.4s ease;
 }
 
@@ -220,6 +234,17 @@ body::before {
   color: var(--text-secondary);
   text-align: center;
   margin-bottom: 0.5rem;
+}
+
+/* ===== Skill brand icons (Simple Icons CDN) ===== */
+.skill-cdn-icon {
+  filter: brightness(0);
+  opacity: 0.88;
+}
+
+[data-theme="dark"] .skill-cdn-icon {
+  filter: brightness(0) invert(1);
+  opacity: 0.92;
 }
 
 /* ===== Reduced Motion ===== */

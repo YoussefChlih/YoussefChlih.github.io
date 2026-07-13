@@ -66,10 +66,6 @@ export const wordReveal: Variants = {
 export const cardHover = {
   y: -8,
   scale: 1.02,
-  transition: {
-    duration: 0.3,
-    ease: [...expoOut],
-  },
 };
 
 export const scaleIn: Variants = {

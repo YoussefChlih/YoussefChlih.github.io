@@ -4,6 +4,7 @@ import { motion } from "motion/react";
 import { Award, Briefcase, Headset } from "lucide-react";
 import { identity, profile, stats } from "@/lib/data";
 import { fadeInUp, staggerContainer, viewportConfig } from "@/lib/animations";
+import { Picture } from "@/components/ui/picture";
 
 export function About() {
   // Mapping icons to string IDs
@@ -51,10 +52,19 @@ export function About() {
               className="relative aspect-[4/5] w-full max-w-[340px] overflow-hidden border border-[var(--border)] bg-[var(--bg-elevated)]"
               style={{ borderRadius: "16px" }}
             >
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src="/headshot.png"
+              {/* eslint-disable is not needed: using <Picture> with width/height. */}
+              <Picture
+                srcBase="/headshot"
+                sources={[
+                  { width: 400, avif: "/opt/headshot/400.avif", webp: "/opt/headshot/400.webp" },
+                  { width: 640, avif: "/opt/headshot/640.avif", webp: "/opt/headshot/640.webp" },
+                  { width: 680, avif: "/opt/headshot/680.avif", webp: "/opt/headshot/680.webp" },
+                ]}
+                fallbackSrc="/headshot.webp"
                 alt="Youssef Headshot"
+                width={680}
+                height={850}
+                sizes="(min-width: 768px) 340px, 80vw"
                 className="object-cover w-full h-full filter grayscale hover:grayscale-0 transition-all duration-700"
               />
             </div>

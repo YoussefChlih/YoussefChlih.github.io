@@ -5,6 +5,7 @@ import { MessageSquare, ArrowRight } from "lucide-react";
 import { FaLinkedin, FaInstagram, FaYoutube } from "react-icons/fa";
 import { identity, profile } from "@/lib/data";
 import { fadeInUp, staggerContainer, viewportConfig } from "@/lib/animations";
+import { Picture } from "@/components/ui/picture";
 
 export function Hero() {
   return (
@@ -126,10 +127,21 @@ export function Hero() {
               className="relative aspect-square w-full max-w-[380px] md:max-w-[420px] overflow-hidden shadow-lg border border-[var(--border)]"
               style={{ borderRadius: "24px" }}
             >
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src="/portrait.png"
+              {/* Above-the-fold hero portrait — priority + eager loading. */}
+              <Picture
+                srcBase="/portrait"
+                sources={[
+                  { width: 480, avif: "/opt/portrait/480.avif", webp: "/opt/portrait/480.webp" },
+                  { width: 768, avif: "/opt/portrait/768.avif", webp: "/opt/portrait/768.webp" },
+                  { width: 960, avif: "/opt/portrait/960.avif", webp: "/opt/portrait/960.webp" },
+                ]}
+                fallbackSrc="/portrait.webp"
                 alt={identity.name}
+                width={960}
+                height={960}
+                sizes="(min-width: 768px) 420px, 90vw"
+                priority
+                decoding="auto"
                 className="object-cover w-full h-full hover:scale-105 transition-transform duration-700"
               />
             </div>

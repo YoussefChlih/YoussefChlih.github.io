@@ -1,11 +1,20 @@
+import dynamicImport from "next/dynamic";
 import { Hero } from "@/components/sections/hero";
 import { About } from "@/components/sections/about";
 import { Skills } from "@/components/sections/skills";
-import { Certifications } from "@/components/sections/certifications";
 import { Qualification } from "@/components/sections/qualification";
-import { Projects } from "@/components/sections/projects";
-import { Contact } from "@/components/sections/contact";
-import { Footer } from "@/components/sections/footer";
+import { BelowFoldSections } from "@/components/sections/below-fold-sections";
+
+const Footer = dynamicImport(
+  () => import("@/components/sections/footer").then((m) => m.Footer),
+  { loading: () => null }
+);
+
+// Route segment config: this page is 100% static content. Confirm to the
+// compiler that we never need per-request server compute, so Vercel serves it
+// straight from the CDN edge with zero function invocation.
+export const dynamic = "force-static";
+export const revalidate = false;
 
 export default function Home() {
   return (
@@ -16,13 +25,8 @@ export default function Home() {
       <hr className="dotted-rule" />
       <Skills />
       <hr className="dotted-rule" />
-      <Certifications />
-      <hr className="dotted-rule" />
       <Qualification />
-      <hr className="dotted-rule" />
-      <Projects />
-      <hr className="dotted-rule" />
-      <Contact />
+      <BelowFoldSections />
       <Footer />
     </main>
   );

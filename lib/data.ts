@@ -2,22 +2,23 @@
 // Pulls real data from CV: Youssef El Yarchouhi (Software Engineer)
 
 export const identity = {
-  name: "Youssef El Yarchouhi",
-  title: "Software Engineer",
+  name: "Youssef CHLIH",
+  title: "AI & Data Developer",
   logoText: "YoussefEL01",
   email: "youssefchlih.ai@gmail.com", // Keeping real email from CV
   whatsapp: "+212606544498", // WhatsApp link / contact number
   phone: "+212 6 06 54 44 98",
   linkedin: "https://linkedin.com/in/youssef-chlih",
   github: "https://github.com/YoussefChlih",
-  instagram: "https://instagram.com",
-  youtube: "https://youtube.com",
-  location: "Kénitra, Morocco",
+  // Real handles (not bare domains) — external links must point at the profile.
+  instagram: "https://instagram.com/youssefchlih",
+  youtube: "https://youtube.com/@YoussefChlih",
+  location: "Kenitra, Morocco",
   resumeUrl: "/CV_CHLIH_YOUSSEF.pdf",
 };
 
 export const profile =
-  "Passionate about building digital solutions, web/mobile development, and artificial intelligence. My journey started with Harvard's CS50x, which sparked a deep-seated passion for full-stack engineering, problem-solving, and continuous learning.";
+  "AI & Data Developer focused on machine learning, deep learning, NLP, computer vision, and data engineering. Currently interning at HB Dev on the Mentora AI platform, building databases and AI pipelines with LangChain, LangGraph, LangSmith, n8n, Gemini VLM, and Claude API. Trilingual in Arabic, French, and English, with a strong bias for rigor and results.";
 
 export interface Stat {
   icon: string;
@@ -26,9 +27,9 @@ export interface Stat {
 }
 
 export const stats: Stat[] = [
-  { icon: "award", number: "3 Years", label: "Experience" },
-  { icon: "briefcase", number: "12+", label: "Completed Projects" },
-  { icon: "headset", number: "Online 24/7", label: "Support" },
+  { icon: "award", number: "3+", label: "Years Experience" },
+  { icon: "briefcase", number: "6", label: "Projects & Research" },
+  { icon: "headset", number: "3", label: "Languages Spoken" },
 ];
 
 export interface Experience {
@@ -43,13 +44,13 @@ export interface Experience {
 export const experiences: Experience[] = [
   {
     id: "hbdev",
-    company: "HB Dev (Mentora AI)",
+    company: "HB Dev",
     role: "AI & Data Engineering Intern",
     period: "Apr 2026 – Present",
     location: "Tétouan",
     description: [
-      "Conceived and structured databases for the Mentora AI educational platform to optimize content pipelines",
-      "Developed Python pipelines (LangChain, LangGraph, LangSmith) and n8n workflows for automated generation of personalized pedagogical content",
+      "Conceived and structured the Mentora AI database to organize data for the educational pipeline",
+      "Developed n8n workflows (Gemini VLM, Claude API) and Python pipelines with LangChain, LangGraph, and LangSmith for automated multimodal educational content generation",
     ],
   },
   {
@@ -59,24 +60,25 @@ export const experiences: Experience[] = [
     period: "Feb 2025 – Jun 2025",
     location: "Mohammedia",
     description: [
-      "Developed a 3D object classification system using a DGCNN deep learning model trained on ModelNet10",
-      "Built an interactive Streamlit application for real-time inference and visualization",
+      "Developed a 3D object classification system based on a DGCNN model trained on ModelNet10",
+      "Built an interactive Streamlit application for real-time classification and visualization",
     ],
   },
   {
     id: "hardtech",
-    company: "HardTech Maroc (BabyBain)",
+    company: "HardTech Maroc",
     role: "AI Development Intern",
     period: "Aug 2024 – Sep 2024",
     location: "Casablanca",
     description: [
-      "Designed an automated hardware fault detection system using Machine Learning algorithms",
-      "Analyzed and preprocessed telemetry data to optimize predictive performance",
+      "Designed an automated computer fault detection system using machine learning",
+      "Analyzed and preprocessed data to improve predictive model performance",
     ],
   },
 ];
 
 export interface Qualification {
+  id: string;
   title: string;
   subtitle: string;
   date: string;
@@ -86,43 +88,43 @@ export interface Qualification {
 export const qualifications: Qualification[] = [
   // Education
   {
-    title: "ENAID",
-    subtitle: "Software Engineering Degree",
-    date: "Oct 2024 – Jun 2027",
+    id: "est-big-data",
+    title: "Licence Big Data & Intelligence Artificielle",
+    subtitle: "EST Salé",
+    date: "2025 – 2026",
     type: "education",
   },
   {
-    title: "Higher School of Technology - EST",
-    subtitle: "DUT Web & Mobile App Dev",
-    date: "Sep 2022 – Apr 2024",
+    id: "dut-iai-de",
+    title: "DUT Intelligence Artificielle & Data Engineering",
+    subtitle: "EST Nador",
+    date: "2023 – 2025",
     type: "education",
   },
   {
-    title: "Multidisciplinary Faculty",
-    subtitle: "Biology Studies",
-    date: "Sep 2021 – Feb 2022",
-    type: "education",
-  },
-  {
-    title: "Ibn Nafis High School",
-    subtitle: "Baccalauréat, Science Physique",
-    date: "Sep 2020 – Jun 2021",
+    id: "bac-sm-a",
+    title: "Baccalauréat Sciences Mathématiques A",
+    subtitle: "Lycée Moulay Rachid",
+    date: "2022 – 2023",
     type: "education",
   },
   // Experience
   {
+    id: "hb-dev",
     title: "HB Dev",
     subtitle: "AI & Data Engineering Intern",
     date: "Apr 2026 – Present",
     type: "experience",
   },
   {
+    id: "3d-smart-factory",
     title: "3D Smart Factory",
     subtitle: "AI Developer Intern",
     date: "Feb 2025 – Jun 2025",
     type: "experience",
   },
   {
+    id: "hardtech-maroc",
     title: "HardTech Maroc",
     subtitle: "AI Development Intern",
     date: "Aug 2024 – Sep 2024",
@@ -137,44 +139,101 @@ export interface SkillCategory {
 
 export const skillCategories: SkillCategory[] = [
   {
-    title: "Frameworks & Libraries",
+    title: "IA & Machine Learning",
     skills: [
-      "Node.js",
-      "Express.js",
-      "React.js",
-      "Next.js",
-      "Tailwind",
-      "Django",
-      "Flask",
-      "Laravel",
-      "Bootstrap",
-      "jQuery",
+      "Machine Learning",
+      "Deep Learning",
+      "NLP",
+      "GANs",
+      "LLMs",
+      "RAG",
+      "Modèles prédictifs",
     ],
   },
   {
-    title: "Tools & Technologies",
+    title: "Pipelines IA & Orchestration",
     skills: [
-      "Git",
-      "Postman",
-      "PostgreSQL",
-      "Wordpress",
-      "MySQL",
-      "Firebase",
-      "Figma",
-      "Jira",
+      "LangChain",
+      "LangGraph",
+      "LangSmith",
+      "n8n",
+      "Gemini VLM",
+      "Claude API",
     ],
   },
   {
-    title: "Programming Languages",
+    title: "Computer Vision",
     skills: [
-      "JavaScript",
-      "TypeScript",
+      "OpenCV",
+      "YOLOv8",
+      "3D CNN",
+      "Pillow",
+    ],
+  },
+  {
+    title: "Data & BI",
+    skills: [
+      "Talend",
+      "ETL",
+      "Data Modeling",
+      "Power BI",
+      "SQL Avancé",
+      "OLAP",
+    ],
+  },
+  {
+    title: "Langages de Programmation",
+    skills: [
       "Python",
-      "PHP",
       "Java",
-      "C#",
-      "C++",
-      "Go",
+      "JavaScript",
+      "Scala",
+    ],
+  },
+  {
+    title: "Bases de Données",
+    skills: [
+      "SQL",
+      "PostgreSQL",
+      "MongoDB",
+      "Redis",
+      "Cassandra",
+      "Neo4j",
+    ],
+  },
+  {
+    title: "Web & APIs",
+    skills: [
+      "HTML",
+      "CSS",
+      "React",
+      "FastAPI",
+      "REST APIs",
+    ],
+  },
+  {
+    title: "DevOps & Infrastructure",
+    skills: [
+      "Git/GitHub",
+      "Docker",
+      "Kubernetes",
+      "Jenkins",
+      "GitLab CI",
+      "Terraform",
+      "CloudFormation",
+    ],
+  },
+  {
+    title: "Compétences Interpersonnelles",
+    skills: [
+      "Travail d’équipe",
+      "Communication",
+      "Esprit d’analyse",
+      "Adaptabilité",
+      "Gestion du temps",
+      "Résolution de problèmes",
+      "Autonomie",
+      "Rigueur",
     ],
   },
 ];
@@ -184,60 +243,32 @@ export interface Project {
   category: "web" | "mobile" | "cv"; // cv = computer vision
   description: string;
   date: string;
+  tags?: string[];
   url?: string;
   isLive?: boolean;
 }
 
 export const projects: Project[] = [
   {
-    title: "RezAdapt.com",
+    title: "HireGenius",
     category: "web",
-    description: "Adaptive web platform optimizing layout structures for responsive business displays.",
-    date: "March 2026",
-    isLive: true,
+    description: "Intelligent recruitment system that analyzes CVs with NLP and evaluates interview emotions with facial and voice analysis.",
+    date: "2025",
+    tags: ["NLP", "Computer vision", "Recruitment"],
   },
   {
-    title: "Tadartino Real Estate Platform",
+    title: "Kwizy",
     category: "web",
-    description: "Comprehensive property listings search platform featuring interactive geolocation features.",
-    date: "January 2026",
-    isLive: true,
-  },
-  {
-    title: "CoStudy Learning Sessions Platform",
-    category: "web",
-    description: "Peer-to-peer virtual sessions booking platform for university study clubs.",
+    description: "AI-powered quiz platform built with Retrieval-Augmented Generation, Python, and Flask, with CI/CD and automated testing.",
     date: "December 2025",
+    tags: ["RAG", "Flask", "CI/CD"],
   },
   {
-    title: "Quiz Master",
+    title: "Data Warehouse",
     category: "web",
-    description: "Intelligent web-based quiz orchestrator utilizing RAG (Retrieval-Augmented Generation).",
-    date: "November 2025",
-  },
-  {
-    title: "Flutter Club Community App",
-    category: "mobile",
-    description: "Cross-platform mobile application providing real-time event booking and updates for communities.",
-    date: "October 2025",
-  },
-  {
-    title: "Hand Tracking Project",
-    category: "cv",
-    description: "Real-time gestures-based controls implementation using OpenCV and MediaPipe.",
-    date: "September 2025",
-  },
-  {
-    title: "Django Auctions Website",
-    category: "web",
-    description: "Interactive real-time bid orchestrator complete with notifications and checkout forms.",
-    date: "June 2025",
-  },
-  {
-    title: "Flask Ecommerce Website",
-    category: "web",
-    description: "Microservices-ready shopping cart platform featuring secure payment processors.",
-    date: "May 2025",
+    description: "Data warehouse built in star schema to analyze academic programs and job market needs, with ETL, Power BI dashboards, and OLAP analysis.",
+    date: "January 2026",
+    tags: ["ETL", "Power BI", "OLAP"],
   },
 ];
 
@@ -251,15 +282,39 @@ export interface Certificate {
 
 export const certificates: Certificate[] = [
   {
-    title: "CS50's Introduction to Computer Science",
-    issuer: "HarvardX",
-    description: "Rigorous entry-level computer science foundations course covering C, Python, SQL, and Web structures.",
+    title: "Oracle Cloud Infrastructure 2024 Foundations Associate",
+    issuer: "Oracle",
+    description: "Foundational Oracle Cloud certification covering core cloud services and concepts.",
     date: "2024",
   },
   {
-    title: "CS50's Web Programming with Python and JavaScript",
-    issuer: "HarvardX",
-    description: "Full-stack programming course deep diving into Django, React, CI/CD, SQL, and CSS layout controls.",
-    date: "2024",
+    title: "Generative AI Professional",
+    issuer: "Oracle Cloud Infrastructure",
+    description: "Professional certification focused on practical generative AI concepts and usage.",
+    date: "2025",
+  },
+  {
+    title: "The Machine Learning Process A–Z",
+    issuer: "365 Data Science",
+    description: "Machine learning workflow and methodology course from data preparation to deployment.",
+    date: "2025",
+  },
+  {
+    title: "Python Programmer Bootcamp",
+    issuer: "365 Data Science",
+    description: "Python programming bootcamp focused on practical coding foundations and problem solving.",
+    date: "2025",
+  },
+  {
+    title: "Intro to Data Science",
+    issuer: "Cisco Academy",
+    description: "Introductory data science certification covering core analysis and data concepts.",
+    date: "2025",
+  },
+  {
+    title: "MLOps Level 2",
+    issuer: "Coursera",
+    description: "Operational machine learning certification focused on model lifecycle and deployment workflows.",
+    date: "2025",
   },
 ];
