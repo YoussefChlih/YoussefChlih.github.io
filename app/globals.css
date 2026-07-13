@@ -236,6 +236,104 @@ body::before {
   margin-bottom: 0.5rem;
 }
 
+/* ===== Skills Marquee Lanes ===== */
+.skills-marquee {
+  --marquee-bg: #06080f;
+  background: var(--marquee-bg);
+  color: #f7f5f1;
+}
+
+.skills-marquee__eyebrow {
+  color: rgba(97, 218, 251, 0.65) !important;
+}
+
+.skills-marquee__ambient {
+  z-index: 0;
+}
+
+.skills-marquee__glow {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(90px);
+  opacity: 0.45;
+}
+
+.skills-marquee__glow--a {
+  width: 42%;
+  height: 40%;
+  left: -8%;
+  top: 10%;
+  background: rgba(65, 105, 225, 0.14);
+}
+
+.skills-marquee__glow--b {
+  width: 36%;
+  height: 45%;
+  left: 32%;
+  top: 35%;
+  background: rgba(36, 150, 237, 0.1);
+}
+
+.skills-marquee__glow--c {
+  width: 40%;
+  height: 42%;
+  right: -6%;
+  top: 15%;
+  background: rgba(238, 76, 44, 0.1);
+}
+
+.skills-marquee__grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+  background-size: 44px 44px;
+  mask-image: radial-gradient(ellipse 75% 65% at 50% 50%, black 15%, transparent 78%);
+}
+
+@keyframes skills-marquee-left {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+@keyframes skills-marquee-right {
+  from {
+    transform: translate3d(-50%, 0, 0);
+  }
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.skills-marquee__track--left {
+  animation: skills-marquee-left var(--marquee-duration, 40s) linear infinite;
+}
+
+.skills-marquee__track--right {
+  animation: skills-marquee-right var(--marquee-duration, 42s) linear infinite;
+}
+
+.skills-marquee__lane:hover .skills-marquee__track {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skills-marquee__track--left,
+  .skills-marquee__track--right {
+    animation: none !important;
+    transform: none !important;
+  }
+
+  .skills-marquee__lane {
+    overflow-x: auto;
+  }
+}
+
 /* ===== Skill brand icons (Simple Icons CDN) ===== */
 .skill-cdn-icon {
   filter: brightness(0);

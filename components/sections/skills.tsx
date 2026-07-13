@@ -1,343 +1,132 @@
 "use client";
 
+import { Radar } from "lucide-react";
 import { motion } from "motion/react";
-import {
-  Bot,
-  Brain,
-  Database,
-  Globe,
-  Layers,
-  Network,
-  Radar,
-  Server,
-  Sparkles,
-  TrendingUp,
-  Users,
-  Workflow,
-} from "lucide-react";
-import { fadeInUp, staggerContainer, viewportConfig } from "@/lib/animations";
-import { SkillIcon } from "@/components/sections/skill-icon";
-import type { LucideIcon } from "lucide-react";
+import { fadeInUp, viewportConfig } from "@/lib/animations";
+import { skillLanes, type LaneSkill, type SkillLane } from "@/lib/skill-lanes-data";
 
-// ---------------------------------------------------------------------------
-// Data
-// ---------------------------------------------------------------------------
+function SkillBadge({ skill }: { skill: LaneSkill }) {
+  const accent = skill.brandColor;
 
-interface SkillCategoryDef {
-  title: string;
-  /** Icon shown in the category header — one icon for the whole group */
-  headerIcon: LucideIcon;
-  skills: string[];
-  tier: 1 | 2 | 3;
-}
-
-/**
- * Tier 1 — Core stack (larger cards, full 3-col row)
- * Tier 2 — Secondary tech (equal-height cards in 2→3 col grid)
- * Tier 3 — Soft skills (flat pill strip, no card wrapper)
- */
-const categories: SkillCategoryDef[] = [
-  // ── Tier 1 ────────────────────────────────────────────────────────────────
-  {
-    title: "IA & Machine Learning",
-    headerIcon: Brain,
-    tier: 1,
-    skills: [
-      "Machine Learning",
-      "Deep Learning",
-      "NLP",
-      "GANs",
-      "LLMs",
-      "RAG",
-      "Modèles prédictifs",
-    ],
-  },
-  {
-    title: "Langages de Programmation",
-    headerIcon: Sparkles,
-    tier: 1,
-    skills: ["Python", "Java", "JavaScript", "Scala"],
-  },
-  {
-    title: "Web & APIs",
-    headerIcon: Globe,
-    tier: 1,
-    skills: ["HTML", "CSS", "React", "FastAPI", "REST APIs"],
-  },
-
-  // ── Tier 2 ────────────────────────────────────────────────────────────────
-  {
-    title: "Pipelines IA & Orchestration",
-    headerIcon: Workflow,
-    tier: 2,
-    skills: ["LangChain", "LangGraph", "LangSmith", "n8n", "Gemini VLM", "Claude API"],
-  },
-  {
-    title: "Computer Vision",
-    headerIcon: Layers,
-    tier: 2,
-    skills: ["OpenCV", "YOLOv8", "3D CNN", "Pillow"],
-  },
-  {
-    title: "Data & BI",
-    headerIcon: TrendingUp,
-    tier: 2,
-    skills: ["Talend", "ETL", "Data Modeling", "Power BI", "SQL Avancé", "OLAP"],
-  },
-  {
-    title: "Bases de Données",
-    headerIcon: Database,
-    tier: 2,
-    skills: ["SQL", "PostgreSQL", "MongoDB", "Redis", "Cassandra", "Neo4j"],
-  },
-  {
-    title: "DevOps & Infrastructure",
-    headerIcon: Server,
-    tier: 2,
-    skills: [
-      "Git/GitHub",
-      "Docker",
-      "Kubernetes",
-      "Jenkins",
-      "GitLab CI",
-      "Terraform",
-      "CloudFormation",
-    ],
-  },
-
-  // ── Tier 3 ────────────────────────────────────────────────────────────────
-  {
-    title: "Compétences Interpersonnelles",
-    headerIcon: Users,
-    tier: 3,
-    skills: [
-      "Travail d'équipe",
-      "Communication",
-      "Esprit d'analyse",
-      "Adaptabilité",
-      "Gestion du temps",
-      "Résolution de problèmes",
-      "Autonomie",
-      "Rigueur",
-    ],
-  },
-];
-
-// ---------------------------------------------------------------------------
-// Skill icons that have a real brand logo (SI or CDN).
-// Everything NOT in this set renders text-only — no fake bullet.
-// ---------------------------------------------------------------------------
-const BRAND_ICON_SKILLS = new Set([
-  // SI react-icons
-  "Machine Learning", // scikit-learn
-  "Deep Learning",    // pytorch
-  "NLP",              // huggingface
-  "LangChain",
-  "LangGraph",
-  "Gemini VLM",
-  "Claude API",
-  "OpenCV",
-  "YOLOv8",
-  "Talend",
-  "Python",
-  "Java",
-  "JavaScript",
-  "Scala",
-  "SQL",
-  "PostgreSQL",
-  "MongoDB",
-  "Redis",
-  "Cassandra",
-  "HTML",
-  "CSS",
-  "React",
-  "FastAPI",
-  "Git/GitHub",
-  "Docker",
-  "Kubernetes",
-  "Jenkins",
-  "GitLab CI",
-  "Terraform",
-  // CDN
-  "n8n",
-  "Power BI",
-  "Neo4j",
-  "CloudFormation",
-]);
-
-// ---------------------------------------------------------------------------
-// Components
-// ---------------------------------------------------------------------------
-
-function SkillPill({ skill }: { skill: string }) {
-  const hasBrandIcon = BRAND_ICON_SKILLS.has(skill);
   return (
     <span
-      className="
-        skill-pill inline-flex items-center gap-1.5
-        rounded-[6px] border border-[var(--border)]
-        bg-[var(--bg-elevated)]
-        px-3 py-1.5
-        text-[13px] font-medium leading-none text-[var(--text-primary)]
-        transition-all duration-[150ms] ease-[ease]
-        hover:-translate-y-0.5 hover:border-[var(--text-primary)]
-        select-none cursor-default
-      "
+      className="skills-marquee__badge group relative inline-flex shrink-0 items-center gap-3 rounded-2xl border px-4 py-3 backdrop-blur-xl transition-[transform,box-shadow,border-color] duration-300 hover:-translate-y-0.5"
+      style={{
+        borderColor: `${accent}55`,
+        background: `linear-gradient(135deg, ${accent}14 0%, rgba(12,14,20,0.72) 55%)`,
+        boxShadow: `0 0 0 1px ${accent}22, 0 0 18px ${accent}18, inset 0 1px 0 rgba(255,255,255,0.06)`,
+      }}
       data-cursor="hover"
     >
-      {hasBrandIcon && <SkillIcon skill={skill} />}
-      <span>{skill}</span>
+      <span
+        className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-white/10 bg-black/25"
+        style={{ boxShadow: `0 0 12px ${accent}33` }}
+      >
+        {skill.iconSlug ? (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src={`https://cdn.simpleicons.org/${skill.iconSlug}/${accent.replace("#", "")}`}
+            alt=""
+            width={20}
+            height={20}
+            loading="lazy"
+            decoding="async"
+            className="h-5 w-5 object-contain"
+            aria-hidden
+          />
+        ) : (
+          <Radar size={18} strokeWidth={1.75} style={{ color: accent }} aria-hidden />
+        )}
+      </span>
+      <span className="whitespace-nowrap text-sm font-medium tracking-wide text-white/90">
+        {skill.name}
+      </span>
+      <span
+        className="pointer-events-none absolute inset-0 rounded-2xl opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+        style={{ boxShadow: `0 0 28px ${accent}55, 0 0 0 1px ${accent}88` }}
+        aria-hidden
+      />
     </span>
   );
 }
 
-interface CategoryCardProps {
-  category: SkillCategoryDef;
-  animVariant?: "fadeInUp";
-}
+function MarqueeLane({ lane }: { lane: SkillLane }) {
+  // Two identical halves → animate exactly -50% for a seamless loop.
+  const half = [...lane.skills, ...lane.skills];
+  const sequence = [...half, ...half];
+  const animClass =
+    lane.direction === "left"
+      ? "skills-marquee__track--left"
+      : "skills-marquee__track--right";
 
-function CategoryCard({ category }: CategoryCardProps) {
-  const HeaderIcon = category.headerIcon;
   return (
-    <motion.article
-      variants={fadeInUp}
-      className="
-        flex flex-col
-        rounded-[12px] border border-[var(--border)] bg-[var(--bg-elevated)]
-        p-6
-      "
-      data-cursor="hover"
-    >
-      {/* Header */}
-      <h3 className="mb-4 flex items-center gap-2 border-b border-[var(--border)] pb-3">
-        <HeaderIcon
-          size={15}
-          strokeWidth={1.75}
-          className="shrink-0 text-[var(--text-secondary)]"
-          aria-hidden
-        />
-        <span className="font-mono text-[11px] font-medium uppercase tracking-[0.14em] text-[var(--text-primary)]">
-          {category.title}
-        </span>
-      </h3>
-
-      {/* Pills */}
-      <div className="flex flex-wrap gap-3">
-        {category.skills.map((skill) => (
-          <SkillPill key={skill} skill={skill} />
+    <div className="skills-marquee__lane relative overflow-hidden py-2">
+      <div
+        className={`skills-marquee__track flex w-max gap-4 ${animClass}`}
+        style={{ ["--marquee-duration" as string]: `${lane.duration}s` }}
+        aria-hidden={false}
+      >
+        {sequence.map((skill, index) => (
+          <SkillBadge key={`${lane.id}-${skill.id}-${index}`} skill={skill} />
         ))}
       </div>
-    </motion.article>
+    </div>
   );
 }
 
-// ---------------------------------------------------------------------------
-// Main export
-// ---------------------------------------------------------------------------
-
 export function Skills() {
-  const tier1 = categories.filter((c) => c.tier === 1);
-  const tier2 = categories.filter((c) => c.tier === 2);
-  const tier3 = categories.filter((c) => c.tier === 3)[0];
-
   return (
-    <section id="skills" className="section bg-[var(--bg)]">
-      <div className="container">
-        {/* Section heading */}
-        <div className="mx-auto mb-14 max-w-4xl text-center">
-          <span className="eyebrow">Capability map</span>
+    <section id="skills" className="skills-marquee section relative overflow-hidden">
+      <div className="skills-marquee__ambient pointer-events-none absolute inset-0" aria-hidden>
+        <div className="skills-marquee__glow skills-marquee__glow--a" />
+        <div className="skills-marquee__glow skills-marquee__glow--b" />
+        <div className="skills-marquee__glow skills-marquee__glow--c" />
+        <div className="skills-marquee__grid" />
+      </div>
+
+      <div className="container relative z-[1]">
+        <motion.div
+          className="mx-auto mb-12 max-w-3xl text-center sm:mb-14"
+          variants={fadeInUp}
+          initial="hidden"
+          whileInView="visible"
+          viewport={viewportConfig}
+        >
+          <span className="skills-marquee__eyebrow eyebrow">Capability map</span>
           <h2
-            className="text-h2 text-[var(--text-primary)]"
+            className="text-h2 text-white"
             style={{ fontFamily: "var(--font-display)" }}
           >
             Skills
           </h2>
-          <p className="mx-auto mt-4 max-w-2xl text-body text-[var(--text-secondary)]">
-            A structured view of the tools and technologies I use in real builds,
-            from AI orchestration to data systems, APIs, and infrastructure.
+          <p className="mx-auto mt-4 max-w-2xl text-body text-white/50">
+            A continuous stream of the tools behind data systems, cloud
+            architecture, and AI-driven builds.
           </p>
-        </div>
-
-        {/* ── Tier 1: Core stack ─────────────────────────────────────────── */}
-        {/* 3 equal-height cards in one row. min-h ensures they feel "large". */}
-        <motion.div
-          className="mb-6 grid grid-cols-1 gap-6 md:grid-cols-3"
-          style={{ alignItems: "stretch" }}
-          variants={staggerContainer}
-          initial="hidden"
-          whileInView="visible"
-          viewport={viewportConfig}
-        >
-          {tier1.map((cat) => (
-            <CategoryCard key={cat.title} category={cat} />
-          ))}
         </motion.div>
-
-        {/* ── Tier 2: Secondary tech ─────────────────────────────────────── */}
-        {/* CSS grid with grid-auto-rows: 1fr forces every card in the same
-            implicit row to share the same height — no ragged bottom edges.
-            The inline style is required because Tailwind v4 doesn't expose
-            grid-auto-rows as a utility class yet.                           */}
-        <motion.div
-          className="mb-6 grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3"
-          style={{ gridAutoRows: "1fr", alignItems: "stretch" }}
-          variants={staggerContainer}
-          initial="hidden"
-          whileInView="visible"
-          viewport={viewportConfig}
-        >
-          {tier2.map((cat) => (
-            <CategoryCard key={cat.title} category={cat} />
-          ))}
-        </motion.div>
-
-        {/* ── Tier 3: Soft skills — flat pill strip, no card wrapper ─────── */}
-        {tier3 && (
-          <motion.div
-            variants={fadeInUp}
-            initial="hidden"
-            whileInView="visible"
-            viewport={viewportConfig}
-            className="
-              rounded-[12px] border border-[var(--border)] border-dashed
-              bg-[var(--bg-elevated)] px-6 py-5
-            "
-          >
-            <div className="mb-3 flex items-center gap-2 border-b border-[var(--border)] pb-3">
-              <Users
-                size={15}
-                strokeWidth={1.75}
-                className="shrink-0 text-[var(--text-secondary)]"
-                aria-hidden
-              />
-              <span className="font-mono text-[11px] font-medium uppercase tracking-[0.14em] text-[var(--text-primary)]">
-                Also working with · {tier3.title}
-              </span>
-            </div>
-            <div className="flex flex-wrap gap-3">
-              {tier3.skills.map((skill) => (
-                /* Soft skills: text-only pills — no missing/fake icon */
-                <span
-                  key={skill}
-                  className="
-                    inline-flex items-center
-                    rounded-[6px] border border-[var(--border)]
-                    bg-[var(--bg-elevated)]
-                    px-3 py-1.5
-                    text-[13px] font-medium leading-none text-[var(--text-secondary)]
-                    transition-all duration-[150ms] ease-[ease]
-                    hover:-translate-y-0.5 hover:border-[var(--text-primary)] hover:text-[var(--text-primary)]
-                    select-none cursor-default
-                  "
-                  data-cursor="hover"
-                >
-                  {skill}
-                </span>
-              ))}
-            </div>
-          </motion.div>
-        )}
       </div>
+
+      <motion.div
+        className="relative z-[1] space-y-5 sm:space-y-6"
+        variants={fadeInUp}
+        initial="hidden"
+        whileInView="visible"
+        viewport={viewportConfig}
+      >
+        {/* Edge fades so loops feel infinite */}
+        <div
+          className="pointer-events-none absolute inset-y-0 left-0 z-10 w-12 bg-gradient-to-r from-[#06080f] to-transparent sm:w-24"
+          aria-hidden
+        />
+        <div
+          className="pointer-events-none absolute inset-y-0 right-0 z-10 w-12 bg-gradient-to-l from-[#06080f] to-transparent sm:w-24"
+          aria-hidden
+        />
+
+        {skillLanes.map((lane) => (
+          <MarqueeLane key={lane.id} lane={lane} />
+        ))}
+      </motion.div>
     </section>
   );
 }
