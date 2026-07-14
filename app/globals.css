@@ -370,16 +370,7 @@ body::before {
   }
 }
 
-/* ===== Skill brand icons (Simple Icons CDN) ===== */
-.skill-cdn-icon {
-  filter: brightness(0);
-  opacity: 0.88;
-}
-
-[data-theme="dark"] .skill-cdn-icon {
-  filter: brightness(0) invert(1);
-  opacity: 0.92;
-}
+/* ===== Skill brand icons (Devicon CDN – always full-color, no filter needed) ===== */
 
 /* ===== Reduced Motion ===== */
 @media (prefers-reduced-motion: reduce) {

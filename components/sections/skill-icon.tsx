@@ -39,13 +39,13 @@ export function SkillIcon({ skill }: SkillIconProps) {
     return (
       // eslint-disable-next-line @next/next/no-img-element
       <img
-        src={`https://cdn.simpleicons.org/${config.slug}`}
+        src={`https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/${config.slug}/${config.slug}-${config.variant ?? "original"}.svg`}
         alt=""
         width={18}
         height={18}
         loading="lazy"
         decoding="async"
-        className="skill-cdn-icon h-[18px] w-[18px] shrink-0"
+        className="h-[18px] w-[18px] shrink-0"
         aria-hidden
       />
     );

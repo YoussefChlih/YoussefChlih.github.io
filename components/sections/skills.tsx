@@ -22,10 +22,10 @@ function SkillBadge({ skill }: { skill: LaneSkill }) {
         className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-white/10 bg-black/25"
         style={{ boxShadow: `0 0 12px ${accent}33` }}
       >
-        {skill.iconSlug ? (
+        {skill.deviconName ? (
           // eslint-disable-next-line @next/next/no-img-element
           <img
-            src={`https://cdn.simpleicons.org/${skill.iconSlug}/${accent.replace("#", "")}`}
+            src={`https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/${skill.deviconName}/${skill.deviconName}-${skill.deviconVariant}.svg`}
             alt={skill.name}
             width={20}
             height={20}
