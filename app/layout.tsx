@@ -36,6 +36,10 @@ const fontMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://youssefchlih.vercel.app"),
+  alternates: {
+    canonical: "https://youssefchlih.vercel.app",
+  },
   title: "Youssef CHLIH — AI & Data Developer",
   description:
     "Portfolio of Youssef CHLIH — AI & Data Developer specializing in Machine Learning, Deep Learning, NLP, Computer Vision, and Data Engineering. Based in Kénitra, Morocco.",
@@ -54,6 +58,8 @@ export const metadata: Metadata = {
     title: "Youssef CHLIH — AI & Data Developer",
     description:
       "AI & Data Developer specializing in ML, DL, NLP, and Computer Vision.",
+    url: "https://youssefchlih.vercel.app",
+    siteName: "Youssef CHLIH",
     type: "website",
     locale: "en_US",
   },
