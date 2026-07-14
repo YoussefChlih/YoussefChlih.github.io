@@ -20,7 +20,7 @@ function SkillBadge({ skill }: { skill: LaneSkill }) {
       title={skill.name}
     >
       <span
-        className="flex h-14 w-14 shrink-0 items-center justify-center rounded-xl"
+        className="flex h-20 w-20 shrink-0 items-center justify-center rounded-xl"
         style={{
           borderColor: 'var(--marquee-badge-border-tint)',
           borderWidth: '1px',
@@ -33,14 +33,14 @@ function SkillBadge({ skill }: { skill: LaneSkill }) {
           <img
             src={`https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/${skill.deviconName}/${skill.deviconName}-${skill.deviconVariant}.svg`}
             alt={skill.name}
-            width={40}
-            height={40}
+            width={56}
+            height={56}
             loading="lazy"
             decoding="async"
-            className="h-10 w-10 object-contain"
+            className="h-14 w-14 object-contain"
           />
         ) : (
-          <Radar size={32} strokeWidth={1.75} style={{ color: accent }} aria-hidden />
+          <Radar size={44} strokeWidth={1.75} style={{ color: accent }} aria-hidden />
         )}
       </span>
       <span
