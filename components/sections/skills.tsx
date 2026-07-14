@@ -10,34 +10,42 @@ function SkillBadge({ skill }: { skill: LaneSkill }) {
 
   return (
     <span
-      className="skills-marquee__badge group relative inline-flex shrink-0 items-center gap-3 rounded-2xl border px-4 py-3 backdrop-blur-xl transition-[transform,box-shadow,border-color] duration-300 hover:-translate-y-0.5"
+      className="skills-marquee__badge group relative inline-flex shrink-0 items-center gap-3 rounded-2xl border px-5 py-3.5 backdrop-blur-xl transition-[transform,box-shadow,border-color] duration-300 hover:-translate-y-0.5"
       style={{
         borderColor: `${accent}55`,
-        background: `linear-gradient(135deg, ${accent}14 0%, rgba(12,14,20,0.72) 55%)`,
-        boxShadow: `0 0 0 1px ${accent}22, 0 0 18px ${accent}18, inset 0 1px 0 rgba(255,255,255,0.06)`,
+        background: `linear-gradient(135deg, ${accent}14 0%, var(--marquee-badge-bg-end) 55%)`,
+        boxShadow: `0 0 0 1px ${accent}22, 0 0 18px ${accent}18, inset 0 1px 0 var(--marquee-badge-inset-highlight)`,
       }}
       data-cursor="hover"
     >
       <span
-        className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-white/10 bg-black/25"
-        style={{ boxShadow: `0 0 12px ${accent}33` }}
+        className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl"
+        style={{
+          borderColor: 'var(--marquee-badge-border-tint)',
+          borderWidth: '1px',
+          background: 'var(--marquee-badge-icon-bg)',
+          boxShadow: `0 0 12px ${accent}33`,
+        }}
       >
         {skill.deviconName ? (
           // eslint-disable-next-line @next/next/no-img-element
           <img
             src={`https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/${skill.deviconName}/${skill.deviconName}-${skill.deviconVariant}.svg`}
             alt={skill.name}
-            width={20}
-            height={20}
+            width={28}
+            height={28}
             loading="lazy"
             decoding="async"
-            className="h-5 w-5 object-contain"
+            className="h-7 w-7 object-contain"
           />
         ) : (
-          <Radar size={18} strokeWidth={1.75} style={{ color: accent }} aria-hidden />
+          <Radar size={24} strokeWidth={1.75} style={{ color: accent }} aria-hidden />
         )}
       </span>
-      <span className="whitespace-nowrap text-sm font-medium tracking-wide text-white/90">
+      <span
+        className="whitespace-nowrap text-sm font-medium tracking-wide"
+        style={{ color: 'var(--marquee-badge-text)' }}
+      >
         {skill.name}
       </span>
       <span
@@ -96,12 +104,15 @@ export function Skills() {
         >
           <span className="skills-marquee__eyebrow eyebrow">Capability map</span>
           <h2
-            className="text-h2 text-white"
-            style={{ fontFamily: "var(--font-display)" }}
+            className="text-h2"
+            style={{ fontFamily: "var(--font-display)", color: "var(--marquee-text)" }}
           >
             Skills
           </h2>
-          <p className="mx-auto mt-4 max-w-2xl text-body text-white/50">
+          <p
+            className="mx-auto mt-4 max-w-2xl text-body"
+            style={{ color: "var(--marquee-text-muted)" }}
+          >
             A continuous stream of the tools behind data systems, cloud
             architecture, and AI-driven builds.
           </p>

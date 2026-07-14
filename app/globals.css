@@ -239,12 +239,40 @@ body::before {
 /* ===== Skills Marquee Lanes ===== */
 .skills-marquee {
   --marquee-bg: #06080f;
+  --marquee-text: #f7f5f1;
+  --marquee-text-muted: rgba(247, 245, 241, 0.4);
+  --marquee-eyebrow: rgba(97, 218, 251, 0.65);
+  --marquee-badge-bg-end: rgba(12, 14, 20, 0.72);
+  --marquee-badge-border-tint: rgba(255, 255, 255, 0.10);
+  --marquee-badge-icon-bg: rgba(0, 0, 0, 0.25);
+  --marquee-badge-text: rgba(255, 255, 255, 0.90);
+  --marquee-badge-inset-highlight: rgba(255, 255, 255, 0.06);
+  --marquee-grid-line: rgba(255, 255, 255, 0.025);
+  --marquee-glow-a: rgba(65, 105, 225, 0.14);
+  --marquee-glow-b: rgba(36, 150, 237, 0.1);
+  --marquee-glow-c: rgba(238, 76, 44, 0.1);
   background: var(--marquee-bg);
-  color: #f7f5f1;
+  color: var(--marquee-text);
+}
+
+[data-theme="light"] .skills-marquee {
+  --marquee-bg: #f0ede7;
+  --marquee-text: #1a1a1a;
+  --marquee-text-muted: rgba(26, 26, 26, 0.45);
+  --marquee-eyebrow: rgba(30, 120, 180, 0.75);
+  --marquee-badge-bg-end: rgba(255, 255, 255, 0.82);
+  --marquee-badge-border-tint: rgba(0, 0, 0, 0.08);
+  --marquee-badge-icon-bg: rgba(255, 255, 255, 0.6);
+  --marquee-badge-text: rgba(26, 26, 26, 0.88);
+  --marquee-badge-inset-highlight: rgba(255, 255, 255, 0.35);
+  --marquee-grid-line: rgba(0, 0, 0, 0.04);
+  --marquee-glow-a: rgba(65, 105, 225, 0.08);
+  --marquee-glow-b: rgba(36, 150, 237, 0.06);
+  --marquee-glow-c: rgba(238, 76, 44, 0.06);
 }
 
 .skills-marquee__eyebrow {
-  color: rgba(97, 218, 251, 0.65) !important;
+  color: var(--marquee-eyebrow) !important;
 }
 
 .skills-marquee__ambient {
@@ -263,7 +291,7 @@ body::before {
   height: 40%;
   left: -8%;
   top: 10%;
-  background: rgba(65, 105, 225, 0.14);
+  background: var(--marquee-glow-a);
 }
 
 .skills-marquee__glow--b {
@@ -271,7 +299,7 @@ body::before {
   height: 45%;
   left: 32%;
   top: 35%;
-  background: rgba(36, 150, 237, 0.1);
+  background: var(--marquee-glow-b);
 }
 
 .skills-marquee__glow--c {
@@ -279,15 +307,15 @@ body::before {
   height: 42%;
   right: -6%;
   top: 15%;
-  background: rgba(238, 76, 44, 0.1);
+  background: var(--marquee-glow-c);
 }
 
 .skills-marquee__grid {
   position: absolute;
   inset: 0;
   background-image:
-    linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+    linear-gradient(var(--marquee-grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--marquee-grid-line) 1px, transparent 1px);
   background-size: 44px 44px;
   mask-image: radial-gradient(ellipse 75% 65% at 50% 50%, black 15%, transparent 78%);
 }
@@ -323,7 +351,7 @@ body::before {
   line-height: 1;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: rgba(247, 245, 241, 0.4);
+  color: var(--marquee-text-muted);
 }
 
 .skills-marquee__lane {
