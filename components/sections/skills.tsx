@@ -10,16 +10,17 @@ function SkillBadge({ skill }: { skill: LaneSkill }) {
 
   return (
     <span
-      className="skills-marquee__badge group relative inline-flex shrink-0 items-center gap-3 rounded-2xl border px-5 py-3.5 backdrop-blur-xl transition-[transform,box-shadow,border-color] duration-300 hover:-translate-y-0.5"
+      className="skills-marquee__badge group relative inline-flex shrink-0 items-center justify-center rounded-2xl border p-3 backdrop-blur-xl transition-[transform,box-shadow,border-color] duration-300 hover:-translate-y-1"
       style={{
         borderColor: `${accent}55`,
         background: `linear-gradient(135deg, ${accent}14 0%, var(--marquee-badge-bg-end) 55%)`,
         boxShadow: `0 0 0 1px ${accent}22, 0 0 18px ${accent}18, inset 0 1px 0 var(--marquee-badge-inset-highlight)`,
       }}
       data-cursor="hover"
+      title={skill.name}
     >
       <span
-        className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl"
+        className="flex h-14 w-14 shrink-0 items-center justify-center rounded-xl"
         style={{
           borderColor: 'var(--marquee-badge-border-tint)',
           borderWidth: '1px',
@@ -32,21 +33,15 @@ function SkillBadge({ skill }: { skill: LaneSkill }) {
           <img
             src={`https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/${skill.deviconName}/${skill.deviconName}-${skill.deviconVariant}.svg`}
             alt={skill.name}
-            width={28}
-            height={28}
+            width={40}
+            height={40}
             loading="lazy"
             decoding="async"
-            className="h-7 w-7 object-contain"
+            className="h-10 w-10 object-contain"
           />
         ) : (
-          <Radar size={24} strokeWidth={1.75} style={{ color: accent }} aria-hidden />
+          <Radar size={32} strokeWidth={1.75} style={{ color: accent }} aria-hidden />
         )}
-      </span>
-      <span
-        className="whitespace-nowrap text-sm font-medium tracking-wide"
-        style={{ color: 'var(--marquee-badge-text)' }}
-      >
-        {skill.name}
       </span>
       <span
         className="pointer-events-none absolute inset-0 rounded-2xl opacity-0 transition-opacity duration-300 group-hover:opacity-100"
