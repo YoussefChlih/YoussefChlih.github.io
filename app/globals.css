@@ -310,12 +310,48 @@ body::before {
   }
 }
 
+.skills-marquee__row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.skills-marquee__row-label {
+  padding-left: max(1rem, env(safe-area-inset-left));
+  font-family: var(--font-mono-loaded, ui-monospace, monospace);
+  font-size: 0.6875rem;
+  line-height: 1;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(247, 245, 241, 0.4);
+}
+
+.skills-marquee__lane {
+  /* Edge fade so icons don't cut off abruptly at the row ends. */
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent,
+    black 10%,
+    black 90%,
+    transparent
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    black 10%,
+    black 90%,
+    transparent
+  );
+}
+
 .skills-marquee__track--left {
   animation: skills-marquee-left var(--marquee-duration, 40s) linear infinite;
+  will-change: transform;
 }
 
 .skills-marquee__track--right {
   animation: skills-marquee-right var(--marquee-duration, 42s) linear infinite;
+  will-change: transform;
 }
 
 .skills-marquee__lane:hover .skills-marquee__track {

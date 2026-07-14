@@ -17,6 +17,9 @@ export const identity = {
   resumeUrl: "/CV_CHLIH_YOUSSEF.pdf",
 };
 
+export const heroTagline =
+  "AI & Data Developer building intelligent systems with machine learning, NLP, and computer vision — from research to production.";
+
 export const profile =
   "AI & Data Developer focused on machine learning, deep learning, NLP, computer vision, and data engineering. Currently interning at HB Dev on the Mentora AI platform, building databases and AI pipelines with LangChain, LangGraph, LangSmith, n8n, Gemini VLM, and Claude API. Trilingual in Arabic, French, and English, with a strong bias for rigor and results.";
 

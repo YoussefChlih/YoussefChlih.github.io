@@ -8,6 +8,8 @@ export interface LaneSkill {
 
 export interface SkillLane {
   id: string;
+  /** Human-readable group label shown above the row. */
+  label: string;
   direction: "left" | "right";
   duration: number;
   skills: LaneSkill[];
@@ -16,6 +18,7 @@ export interface SkillLane {
 export const skillLanes: SkillLane[] = [
   {
     id: "data",
+    label: "Data & Cloud",
     direction: "left",
     duration: 38,
     skills: [
@@ -30,6 +33,7 @@ export const skillLanes: SkillLane[] = [
   },
   {
     id: "architecture",
+    label: "Web & DevOps",
     direction: "right",
     duration: 42,
     skills: [
@@ -44,6 +48,7 @@ export const skillLanes: SkillLane[] = [
   },
   {
     id: "ai",
+    label: "AI & Machine Learning",
     direction: "left",
     duration: 40,
     skills: [

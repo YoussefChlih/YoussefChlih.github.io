@@ -3,7 +3,7 @@
 import { motion } from "motion/react";
 import { MessageSquare, ArrowRight } from "lucide-react";
 import { FaLinkedin, FaInstagram, FaYoutube } from "react-icons/fa";
-import { identity, profile } from "@/lib/data";
+import { identity, heroTagline } from "@/lib/data";
 import { fadeInUp, staggerContainer, viewportConfig } from "@/lib/animations";
 import { Picture } from "@/components/ui/picture";
 
@@ -95,10 +95,10 @@ export function Hero() {
 
             <motion.p
               variants={fadeInUp}
-              className="text-body mb-8 text-[var(--text-secondary)] max-w-md"
+               className="text-body mb-8 text-[var(--text-secondary)] max-w-md"
               style={{ fontSize: "15px" }}
             >
-              {profile}
+              {heroTagline}
             </motion.p>
 
             <motion.div variants={fadeInUp}>

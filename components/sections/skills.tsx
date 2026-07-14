@@ -26,13 +26,12 @@ function SkillBadge({ skill }: { skill: LaneSkill }) {
           // eslint-disable-next-line @next/next/no-img-element
           <img
             src={`https://cdn.simpleicons.org/${skill.iconSlug}/${accent.replace("#", "")}`}
-            alt=""
+            alt={skill.name}
             width={20}
             height={20}
             loading="lazy"
             decoding="async"
             className="h-5 w-5 object-contain"
-            aria-hidden
           />
         ) : (
           <Radar size={18} strokeWidth={1.75} style={{ color: accent }} aria-hidden />
@@ -60,15 +59,18 @@ function MarqueeLane({ lane }: { lane: SkillLane }) {
       : "skills-marquee__track--right";
 
   return (
-    <div className="skills-marquee__lane relative overflow-hidden py-2">
-      <div
-        className={`skills-marquee__track flex w-max gap-4 ${animClass}`}
-        style={{ ["--marquee-duration" as string]: `${lane.duration}s` }}
-        aria-hidden={false}
-      >
-        {sequence.map((skill, index) => (
-          <SkillBadge key={`${lane.id}-${skill.id}-${index}`} skill={skill} />
-        ))}
+    <div className="skills-marquee__row">
+      <span className="skills-marquee__row-label">{lane.label}</span>
+      <div className="skills-marquee__lane relative overflow-hidden py-2">
+        <div
+          className={`skills-marquee__track flex w-max gap-4 ${animClass}`}
+          style={{ ["--marquee-duration" as string]: `${lane.duration}s` }}
+          aria-hidden={false}
+        >
+          {sequence.map((skill, index) => (
+            <SkillBadge key={`${lane.id}-${skill.id}-${index}`} skill={skill} />
+          ))}
+        </div>
       </div>
     </div>
   );
@@ -113,16 +115,6 @@ export function Skills() {
         whileInView="visible"
         viewport={viewportConfig}
       >
-        {/* Edge fades so loops feel infinite */}
-        <div
-          className="pointer-events-none absolute inset-y-0 left-0 z-10 w-12 bg-gradient-to-r from-[#06080f] to-transparent sm:w-24"
-          aria-hidden
-        />
-        <div
-          className="pointer-events-none absolute inset-y-0 right-0 z-10 w-12 bg-gradient-to-l from-[#06080f] to-transparent sm:w-24"
-          aria-hidden
-        />
-
         {skillLanes.map((lane) => (
           <MarqueeLane key={lane.id} lane={lane} />
         ))}
