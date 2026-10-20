@@ -1,0 +1,158 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@layer base {
+  :root {
+    --bg-primary: #f8fafc;
+    --bg-secondary: #f1f5f9;
+    --bg-card: #ffffff;
+    --bg-card-hover: #f8fafc;
+    --bg-card-border: #e2e8f0;
+    --text-primary: #0f172a;
+    --text-secondary: #475569;
+    --text-muted: #64748b;
+    --accent: #0d9488;
+    --accent-dim: rgba(13, 148, 136, 0.1);
+    --accent-glow: rgba(13, 148, 136, 0.25);
+  }
+
+  .dark {
+    --bg-primary: #0a0a0f;
+    --bg-secondary: #0e0e15;
+    --bg-card: #12121a;
+    --bg-card-hover: #181824;
+    --bg-card-border: #1e1e2e;
+    --text-primary: #e8e8ed;
+    --text-secondary: #9898a8;
+    --text-muted: #5c5c6e;
+    --accent: #00d4aa;
+    --accent-dim: rgba(0, 212, 170, 0.12);
+    --accent-glow: rgba(0, 212, 170, 0.35);
+  }
+
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 80px;
+  }
+
+  body {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: var(--font-dm-sans), system-ui, sans-serif;
+    overflow-x: hidden;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-space-grotesk), system-ui, sans-serif;
+  }
+}
+
+/* Animations */
+@keyframes pulseGlow {
+  0%, 100% {
+    opacity: 1;
+    box-shadow: 0 0 0 0 rgba(0, 212, 170, 0.4);
+  }
+  50% {
+    opacity: 0.7;
+    box-shadow: 0 0 0 8px transparent;
+  }
+}
+
+@keyframes heroGlow {
+  0% {
+    opacity: 0.35;
+    transform: translate(0, 0) scale(1);
+  }
+  100% {
+    opacity: 0.75;
+    transform: translate(-30px, 30px) scale(1.15);
+  }
+}
+
+@keyframes ringRotate {
+  0% { border-color: #1e1e2e; }
+  50% { border-color: rgba(0, 212, 170, 0.45); }
+  100% { border-color: #1e1e2e; }
+}
+
+@keyframes orbitSpin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes counterSpin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(-360deg); }
+}
+
+.animate-pulse-glow {
+  animation: pulseGlow 2s ease-in-out infinite;
+}
+
+.animate-hero-glow {
+  animation: heroGlow 8s ease-in-out infinite alternate;
+}
+
+.animate-ring-rotate {
+  animation: ringRotate 20s linear infinite;
+}
+
+.animate-orbit {
+  animation: orbitSpin 32s linear infinite;
+}
+
+.animate-counter-orbit {
+  animation: counterSpin 32s linear infinite;
+}
+
+/* Continuous Horizontal Marquee Animations */
+@keyframes marqueeLeftToRight {
+  0% {
+    transform: translateX(-50%);
+  }
+  100% {
+    transform: translateX(0%);
+  }
+}
+
+@keyframes marqueeRightToLeft {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee-ltr {
+  animation: marqueeLeftToRight 36s linear infinite;
+  will-change: transform;
+}
+
+.animate-marquee-rtl {
+  animation: marqueeRightToLeft 42s linear infinite;
+  will-change: transform;
+}
+
+.animate-marquee-ltr-fast {
+  animation: marqueeLeftToRight 28s linear infinite;
+  will-change: transform;
+}
+
+.marquee-track-hover:hover .animate-marquee-ltr,
+.marquee-track-hover:hover .animate-marquee-rtl,
+.marquee-track-hover:hover .animate-marquee-ltr-fast {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-marquee-ltr,
+  .animate-marquee-rtl,
+  .animate-marquee-ltr-fast {
+    animation: none !important;
+    transform: none !important;
+  }
+}
