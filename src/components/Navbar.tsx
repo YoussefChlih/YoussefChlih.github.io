@@ -1,10 +1,11 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import Link from "next/link";
 import { Download, Menu, X, ArrowUpRight, Sun, Moon } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
 import { useTheme } from "@/context/ThemeContext";
+import GooeyNav from "@/components/GooeyNav";
 
 const NAV_ITEMS = [
   { label: "About", href: "#about" },
@@ -23,6 +24,24 @@ export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("");
 
+  const navItems = useMemo(
+    () => [
+      { label: language === "fr" ? "À Propos" : "About", href: "#about" },
+      { label: language === "fr" ? "Expérience" : "Experience", href: "#experience" },
+      { label: language === "fr" ? "Projets" : "Projects", href: "#projects" },
+      { label: language === "fr" ? "Compétences" : "Skills", href: "#skills" },
+      { label: "Soft Skills", href: "#soft-skills" },
+      { label: language === "fr" ? "Langues" : "Languages", href: "#languages" },
+      { label: language === "fr" ? "Formation" : "Education", href: "#education" },
+    ],
+    [language]
+  );
+
+  const activeIndex = useMemo(
+    () => navItems.findIndex((item) => item.href === activeSection),
+    [navItems, activeSection]
+  );
+
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 40);
@@ -30,7 +49,7 @@ export default function Navbar() {
       const sections = NAV_ITEMS.map((item) =>
         document.querySelector(item.href)
       );
-      const scrollPos = window.scrollY + 120;
+      const scrollPos = window.scrollY + 140;
 
       for (let i = sections.length - 1; i >= 0; i--) {
         const section = sections[i] as HTMLElement | null;
@@ -52,41 +71,43 @@ export default function Navbar() {
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled
-          ? "bg-white/85 dark:bg-[#0a0a0f]/90 backdrop-blur-md border-b border-slate-200/80 dark:border-[#1e1e2e] py-3 shadow-xs"
-          : "bg-transparent py-5"
+          ? "bg-white/85 dark:bg-[#0a0a0f]/90 backdrop-blur-md border-b border-slate-200/80 dark:border-[#1e1e2e] py-2.5 shadow-xs"
+          : "bg-transparent py-4"
       }`}
     >
-      <div className="max-w-6xl mx-auto px-6 flex items-center justify-between">
+      <div className="max-w-7xl mx-auto px-6 flex items-center justify-between gap-4">
         {/* Logo */}
         <Link
           href="#hero"
-          className="text-xl font-bold tracking-tight text-slate-900 dark:text-[#e8e8ed] hover:text-[#0d9488] dark:hover:text-[#00d4aa] transition-colors"
+          className="text-xl font-bold tracking-tight text-slate-900 dark:text-[#e8e8ed] hover:text-[#0d9488] dark:hover:text-[#00d4aa] transition-colors shrink-0"
         >
           Y<span className="text-[#0d9488] dark:text-[#00d4aa]">.</span>C
         </Link>
 
-        {/* Desktop Navigation */}
-        <nav className="hidden lg:flex items-center gap-7">
-          {NAV_ITEMS.map((item) => {
-            const isActive = activeSection === item.href;
-            return (
-              <a
-                key={item.href}
-                href={item.href}
-                className={`text-sm font-medium transition-colors relative py-1 ${
-                  isActive
-                    ? "text-[#0d9488] dark:text-[#00d4aa]"
-                    : "text-slate-600 hover:text-slate-950 dark:text-[#9898a8] dark:hover:text-[#e8e8ed]"
-                }`}
-              >
-                {item.label}
-                {isActive && (
-                  <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#0d9488] dark:bg-[#00d4aa] rounded-full" />
-                )}
-              </a>
-            );
-          })}
-        </nav>
+        {/* Desktop Gooey Navigation */}
+        <div className="hidden lg:flex items-center justify-center">
+          <GooeyNav
+            items={navItems}
+            activeIndex={activeIndex >= 0 ? activeIndex : 0}
+            theme={theme === "dark" ? "dark" : "light"}
+            size="sm"
+            frame={true}
+            particleCount={14}
+            spread={48}
+            animationTime={550}
+            timeVariance={200}
+            gooeyness={0.55}
+            wobble={0.45}
+            hoverEffect={true}
+            color={theme === "dark" ? "#00d4aa" : "#0d9488"}
+            activeTextColor={theme === "dark" ? "#0a0a0f" : "#ffffff"}
+            colors={
+              theme === "dark"
+                ? ["#00d4aa", "#00b4d8", "#38bdf8"]
+                : ["#0d9488", "#14b8a6", "#0284c7"]
+            }
+          />
+        </div>
 
         {/* Actions */}
         <div className="hidden sm:flex items-center gap-2.5">
