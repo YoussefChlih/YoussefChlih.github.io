@@ -8,6 +8,7 @@ import Skills from "@/components/Skills";
 import SoftSkills from "@/components/SoftSkills";
 import Languages from "@/components/Languages";
 import Education from "@/components/Education";
+import Certificates from "@/components/Certificates";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 
@@ -25,6 +26,7 @@ export default function Home() {
         <SoftSkills />
         <Languages />
         <Education />
+        <Certificates />
         <Contact />
       </main>
       <Footer />

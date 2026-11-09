@@ -15,6 +15,7 @@ const NAV_ITEMS = [
   { label: "Soft Skills", href: "#soft-skills" },
   { label: "Languages", href: "#languages" },
   { label: "Education", href: "#education" },
+  { label: "Certificates", href: "#certificates" },
 ];
 
 export default function Navbar() {
@@ -33,6 +34,7 @@ export default function Navbar() {
       { label: "Soft Skills", href: "#soft-skills" },
       { label: language === "fr" ? "Langues" : "Languages", href: "#languages" },
       { label: language === "fr" ? "Formation" : "Education", href: "#education" },
+      { label: language === "fr" ? "Certificats" : "Certificates", href: "#certificates" },
     ],
     [language]
   );
@@ -218,7 +220,7 @@ export default function Navbar() {
       {/* Mobile Drawer */}
       {mobileMenuOpen && (
         <div className="lg:hidden fixed inset-0 top-[60px] bg-white/95 dark:bg-[#0a0a0f]/95 backdrop-blur-xl border-t border-slate-200 dark:border-[#1e1e2e] p-6 flex flex-col gap-4">
-          {NAV_ITEMS.map((item) => (
+          {navItems.map((item) => (
             <a
               key={item.href}
               href={item.href}
