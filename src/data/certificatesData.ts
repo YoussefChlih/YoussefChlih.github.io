@@ -253,6 +253,7 @@ export const certificatesData: CertificateItem[] = [
       fr: "30 Octobre 2025",
       en: "October 30, 2025",
     },
+    credentialId: "8dec54b0-6102-4be2-a9d3-c7b3027834c7",
     image: "/certificates/python-essentials-1.png",
     pdfUrl: "/certificates/python-essentials-1.pdf",
     description: {

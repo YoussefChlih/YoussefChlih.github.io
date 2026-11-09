@@ -18,7 +18,6 @@ import {
   Pause,
   Download,
   Calendar,
-  Layers,
   Search
 } from "lucide-react";
 import { HugeiconsIcon } from "@hugeicons/react";
@@ -56,6 +55,21 @@ export default function Certificates() {
   const [isAutoplay, setIsAutoplay] = useState(true);
 
   const cardSwapRef = useRef<CardSwapRef>(null);
+
+  // Close modal on Escape and lock background scroll
+  React.useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setSelectedModalCert(null);
+    };
+    if (selectedModalCert) {
+      window.addEventListener("keydown", handleKeyDown);
+      document.body.style.overflow = "hidden";
+    }
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+      document.body.style.overflow = "unset";
+    };
+  }, [selectedModalCert]);
 
   // Filter certificates based on category
   const filteredCerts = useMemo(() => {
@@ -434,63 +448,6 @@ export default function Certificates() {
                 </button>
               </div>
             </div>
-          </div>
-        </div>
-
-        {/* Thumbnail Selector Strip */}
-        <div className="mt-12 pt-8 border-t border-slate-200/80 dark:border-[#1e1e2e]/60">
-          <div className="flex items-center justify-between mb-4">
-            <span className="text-xs font-mono font-semibold text-slate-500 dark:text-[#7a7a8c] uppercase tracking-wider flex items-center gap-2">
-              <Layers className="w-4 h-4 text-teal-600 dark:text-[#00d4aa]" />
-              {language === "fr" ? "Toutes les certifications (13)" : "Browse All Credentials (13)"}
-            </span>
-            <span className="text-[11px] text-slate-400 dark:text-slate-500 font-mono">
-              {language === "fr" ? "Cliquez sur une vignette pour l'afficher" : "Click any thumbnail to inspect"}
-            </span>
-          </div>
-
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7 gap-3">
-            {certificatesData.map((item, idx) => {
-              const isCurrent = currentCert.id === item.id;
-              return (
-                <button
-                  key={item.id}
-                  type="button"
-                  onClick={() => {
-                    // If in current filter, set activeIndex; otherwise switch category to ALL first
-                    if (activeCategory !== "ALL" && item.category !== activeCategory) {
-                      setActiveCategory("ALL");
-                    }
-                    const targetIndex = (
-                      activeCategory === "ALL" || item.category === activeCategory
-                        ? filteredCerts
-                        : certificatesData
-                    ).findIndex((c) => c.id === item.id);
-                    setActiveIndex(targetIndex >= 0 ? targetIndex : 0);
-                  }}
-                  className={`p-2 rounded-xl text-left transition-all border group cursor-pointer ${
-                    isCurrent
-                      ? "bg-teal-500/10 border-teal-500/50 dark:border-[#00d4aa]/60 shadow-xs ring-1 ring-teal-500/30"
-                      : "bg-white dark:bg-[#12121a] border-slate-200 dark:border-[#1e1e2e] hover:border-teal-500/30 dark:hover:border-[#00d4aa]/30 opacity-75 hover:opacity-100"
-                  }`}
-                >
-                  <div className="aspect-[1.41/1] w-full rounded-lg overflow-hidden bg-slate-100 dark:bg-black/30 mb-2 border border-slate-200/50 dark:border-white/5 relative">
-                    <img
-                      src={item.image}
-                      alt={item.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                      loading="lazy"
-                    />
-                  </div>
-                  <h4 className="text-[11px] font-semibold text-slate-800 dark:text-slate-200 truncate leading-tight">
-                    {item.title}
-                  </h4>
-                  <p className="text-[10px] text-slate-400 dark:text-slate-500 truncate mt-0.5 font-mono">
-                    {item.issuer.split(" ")[0]}
-                  </p>
-                </button>
-              );
-            })}
           </div>
         </div>
       </div>
