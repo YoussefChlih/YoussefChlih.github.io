@@ -120,7 +120,7 @@ export default function Certificates() {
           <div>
             <div className="flex items-center gap-3 mb-3">
               <span className="text-xs font-bold text-teal-700 dark:text-[#00d4aa] bg-teal-50 dark:bg-[#00d4aa]/10 px-2.5 py-1 rounded border border-teal-200 dark:border-[#00d4aa]/20 font-mono">
-                08
+                07
               </span>
               <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-slate-900 dark:text-[#e8e8ed] tracking-tight">
                 {language === "fr" ? "Certifications & Diplômes" : "Certifications & Credentials"}

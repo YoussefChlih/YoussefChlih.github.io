@@ -52,7 +52,7 @@ export default function Education() {
         {/* Section Header */}
         <div className="flex items-center gap-3 mb-12">
           <span className="text-xs font-bold text-teal-700 dark:text-[#00d4aa] bg-teal-50 dark:bg-[#00d4aa]/10 px-2.5 py-1 rounded border border-teal-200 dark:border-[#00d4aa]/20 font-mono">
-            07
+            06
           </span>
           <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-[#e8e8ed] tracking-tight">
             {language === "fr" ? "Formation Académique" : "Academic Background"}
